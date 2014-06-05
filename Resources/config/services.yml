@@ -1,0 +1,9 @@
+parameters:
+#    swm_videotek.example.class: Swm\VideotekBundle\Example
+
+services:
+#    swm_videotek.example:
+#        class: %swm_videotek.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    swm_videotek.videoservice:
+        class: Swm\VideotekBundle\Service\VideoService

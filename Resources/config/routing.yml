@@ -1,0 +1,4 @@
+swm_videotek_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: SwmVideotekBundle:Default:index }
+

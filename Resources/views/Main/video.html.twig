@@ -1,0 +1,48 @@
+{% extends "SwmVideotekBundle:Main:layout.html.twig" %}
+
+{% block title %}{{video.videoModel.title}}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{video.videoModel.title}}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{video.videoInfo|raw}}
+    </div>
+    <div class="col-md-6">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {{video.videoModel.description}}
+            </div>
+        </div>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="badge">{{video.videoModel.hits}}</span>
+                Hits
+            </li>
+        </ul>
+
+        {% for t in video.videoModel.tags %}
+            <span class="label label-info"><a href="">{{ t.tag }}</a></span>
+        {% endfor %}
+
+        <p><br /></p>
+
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+            <a class="addthis_button_preferred_1"></a>
+            <a class="addthis_button_preferred_2"></a>
+            <a class="addthis_button_preferred_3"></a>
+            <a class="addthis_button_preferred_4"></a>
+            <a class="addthis_button_compact"></a>
+            <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5199276b35fec7e6"></script>
+
+    </div>
+</div>
+{% endblock %}

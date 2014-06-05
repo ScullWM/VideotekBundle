@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Video" table="video">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="url" type="string" column="url" length="255" nullable="false"/>
+    <field name="title" type="string" column="title" length="255" nullable="false"/>
+    <field name="slug" type="string" column="slug" length="255" nullable="false"/>
+    <field name="fav" type="boolean" column="fav" nullable="false"/>
+    <field name="statut" type="boolean" column="statut" nullable="false"/>
+    <field name="description" type="text" column="description" nullable="false"/>
+    <field name="hits" type="integer" column="hits" nullable="false"/>
+    <many-to-many field="tag" target-entity="Tag" inversed-by="video">
+      <join-table name="video_tag">
+        <join-columns>
+          <join-column name="video_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="tag_id" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>
