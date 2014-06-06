@@ -69,7 +69,7 @@ class MainController extends Controller
      *
      * @Route("/tag/{id}/{slug}", name="video_bytag")
      * @Method("GET")
-     * @Template("SwmVideotekBundle:Main:tag.html.twig")
+     * @Template("SwmVideotekBundle:Main:index.html.twig")
      */
     public function tagAction(Request $request)
     {
@@ -94,7 +94,7 @@ class MainController extends Controller
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = $videoservice->getInfoFromVideo($video);
 
-        $moreVideos = '';//$this->get('doctrine')->getManager()->getRepository('SwmVideotekBundle:Video')->getMore();
+        $moreVideos = array();//$this->get('doctrine')->getManager()->getRepository('SwmVideotekBundle:Video')->getMore();
 
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
     }
