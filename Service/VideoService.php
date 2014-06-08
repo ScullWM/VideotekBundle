@@ -35,10 +35,9 @@ class VideoService
      * @return string      [description]
      */
     private function getYoutubeId($url){
-        $debut_id = explode("v=",$url,2);
-        $id_et_fin_url = explode("&",$debut_id[1],2);
-
-        return (string) $id_et_fin_url[0];
+        $url_string = parse_url($url, PHP_URL_QUERY);
+        parse_str($url_string, $args);
+        return (string) isset($args['v']) ? $args['v'] : false;
     }
 
     /**
