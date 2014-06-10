@@ -94,7 +94,7 @@ class MainController extends Controller
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = $videoservice->getInfoFromVideo($video);
 
-        $moreVideos = array();//$this->get('doctrine')->getManager()->getRepository('SwmVideotekBundle:Video')->getMore();
+        $moreVideos = $this->get('doctrine')->getManager()->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
 
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
     }

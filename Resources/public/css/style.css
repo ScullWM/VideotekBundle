@@ -14,6 +14,10 @@ a.titlevideo {
     text-rendering: optimizelegibility;
     font-size: 14px;
 }
+.img-thumbnail {
+    border:none;
+    background: none;
+}
 
 footer {
     border-top:1px solid rgba(255, 255, 255, 0.3);
