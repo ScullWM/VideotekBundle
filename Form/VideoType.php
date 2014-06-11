@@ -18,7 +18,7 @@ class VideoType extends AbstractType
             ->add('url')
             ->add('title')
             ->add('description')
-            ->add('tag')
+            ->add('tags')
         ;
     }
     
