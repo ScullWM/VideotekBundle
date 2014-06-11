@@ -12,11 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Video
 {
-
-
-
     /**
-     * @ORM\ManyToMany(targetEntity="Swm\VideotekBundle\Entity\Tag")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="videos")
+     * @ORM\JoinTable(name="video_tag")
      */
     private $tags;
 
@@ -250,6 +248,16 @@ class Video
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTag()
     {
         return $this->tags;
     }

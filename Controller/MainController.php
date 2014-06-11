@@ -3,6 +3,8 @@
 namespace Swm\VideotekBundle\Controller;
 
 use Swm\VideotekBundle\Entity\Video;
+use Swm\VideotekBundle\Form\VideoType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -97,5 +99,31 @@ class MainController extends Controller
         $moreVideos = $this->get('doctrine')->getManager()->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
 
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
+    }
+
+    /**
+     * Submit form video
+     *
+     * @Route("/submit", name="video_submit")
+     * @Method({"GET", "POST"})
+     * @Template("SwmVideotekBundle:Main:submit.html.twig")
+     */
+    public function submitAction(Request $request)
+    {
+        $entity = new Video();
+        $form   = $this->createForm(new VideoType(), $entity);
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if($form->isValid())
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+            }
+        }
+
+        return array('form'=>$form->createView());
     }
 }

@@ -31,9 +31,9 @@ class Tag
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Video", mappedBy="tag")
+     * @ORM\ManyToMany(targetEntity="Video", mappedBy="tags")
      */
-    private $video;
+    private $videos;
 
     /**
      * Constructor
@@ -42,7 +42,6 @@ class Tag
     {
         $this->video = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id

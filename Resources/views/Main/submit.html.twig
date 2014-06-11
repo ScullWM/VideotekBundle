@@ -1,0 +1,13 @@
+{% extends "SwmVideotekBundle:Main:layout.html.twig" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <form action="{{ path('video_submit')}}" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-success" />
+        </form>
+    </div>
+</div>
+{% endblock %}

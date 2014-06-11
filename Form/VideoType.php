@@ -17,11 +17,7 @@ class VideoType extends AbstractType
         $builder
             ->add('url')
             ->add('title')
-            ->add('slug')
-            ->add('fav')
-            ->add('statut')
             ->add('description')
-            ->add('hits')
             ->add('tag')
         ;
     }
