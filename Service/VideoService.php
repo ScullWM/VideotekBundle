@@ -3,7 +3,7 @@
 namespace Swm\VideotekBundle\Service;
 
 use Swm\VideotekBundle\Entity\Video;
-use Swm\VideotekBundle\Service\VideoService\VimeoVideoService
+use Swm\VideotekBundle\Service\VideoService\VimeoVideoService;
 use Swm\VideotekBundle\Service\VideoService\YoutubeVideoService;
 use Swm\VideotekBundle\Service\VideoService\DailymotionVideoService;
 use Swm\VideotekBundle\Exception\VideoException;
@@ -37,7 +37,7 @@ class VideoService
         }
 
         $videoId   = $this->specificVideoService->getVideoId($video->getUrl());
-        $extended  = $this->specificVideoService->getThumbnails($youtubeId);
+        $extended  = $this->specificVideoService->getThumbnails($videoId);
 
         $videoExtended = new \StdClass();
         $videoExtended->videoModel = $video;

@@ -1,5 +1,5 @@
 body {
-    background: #4571B0;
+    background: #4571B0 url('../images/bgraf1.jpg') top left no-repeat;
 }
 
 a.navbar-brand {
@@ -17,6 +17,11 @@ a.titlevideo {
 .img-thumbnail {
     border:none;
     background: none;
+}
+
+iframe {
+    width:550px;
+    height:350px;
 }
 
 footer {
