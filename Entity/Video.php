@@ -261,4 +261,12 @@ class Video
     {
         return $this->tags;
     }
+
+    public function setTags($tags)
+    {
+        foreach ($tags as $tag) {
+            $this->addTag($tag);
+        }
+        return $this;
+    }
 }

@@ -112,10 +112,10 @@ class MainController extends Controller
     public function submitAction(Request $request)
     {
         $entity = new Video();
-        $form   = $this->createForm(new VideoType());
+        $form   = $this->createForm(new VideoType(), $entity);
 
-        $videoHandler = new VideoHandler($entity, $form, $request, $this->getDoctrine());
-        $process = $videoHandler->process();
+        $videoHandler = new VideoHandler($form, $request, $this->getDoctrine());
+        $process = $videoHandler->process($entity);
 
         if ($process) {
             $this->get('session')->setFlash('notice', 'Thanks');

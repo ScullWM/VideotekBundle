@@ -5,35 +5,34 @@ namespace Swm\VideotekBundle\Form\Handler;
 use Swm\VideotekBundle\Entity\Video;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class VideoHandler
 {
-    protected $entity;
     protected $form;
     protected $request;
     protected $doctrine;
 
-    public function __construct(Video $entity, Form $form, Request $request, $doctrine)
+    public function __construct(Form $form, Request $request, Registry $doctrine)
     {
-        $this->entity = $entity;
         $this->form = $form;
         $this->request = $request;
         $this->doctrine = $doctrine; 
     }
 
-    public function process()
+    public function process(Video $video)
     {
         if("POST" != $this->request->getMethod()) return false;
         
-        $this->form->bind($this->request);
+        $this->form->handleRequest($this->request);
 
         if(!$this->form->isValid()) return false;
 
         $em = $this->doctrine->getManager();
-        $em->persist($this->entity);
+        $em->persist($video);
         $em->flush();
 
-        $this->onSuccess($this->entity);
+        //$this->onSuccess($video);
 
         return true;
     }
