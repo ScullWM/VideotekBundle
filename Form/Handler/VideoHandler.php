@@ -28,11 +28,14 @@ class VideoHandler
 
         if(!$this->form->isValid()) return false;
 
+        $video->setHits(0);
+        $video->setFav(0);
+
         $em = $this->doctrine->getManager();
         $em->persist($video);
         $em->flush();
 
-        //$this->onSuccess($video);
+        $this->onSuccess($video);
 
         return true;
     }
