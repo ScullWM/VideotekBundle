@@ -19,6 +19,8 @@ class VideoType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('tags')
+            // Doesn't work ...
+            //->add('captcha', 'genemu_captcha', array('property_path' => false))
         ;
     }
     
@@ -28,7 +30,7 @@ class VideoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Swm\VideotekBundle\Entity\Video'
+            'data_class' => 'Swm\VideotekBundle\Entity\Video',
         ));
     }
 

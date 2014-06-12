@@ -7,7 +7,6 @@ class VimeoVideoService implements VideoServiceInterface
     /**
      * Get Video id
      *
-     * @todo  Return exception if no id found
      * @version 12-06-14
      * @param  string $url Url wanted
      * @return int      Video id
