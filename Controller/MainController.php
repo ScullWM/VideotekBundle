@@ -4,6 +4,7 @@ namespace Swm\VideotekBundle\Controller;
 
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Form\VideoType;
+use Swm\VideotekBundle\Form\Handler\VideoHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -111,17 +112,13 @@ class MainController extends Controller
     public function submitAction(Request $request)
     {
         $entity = new Video();
-        $form   = $this->createForm(new VideoType(), $entity);
+        $form   = $this->createForm(new VideoType());
 
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+        $videoHandler = new VideoHandler($entity, $form, $request, $this->getDoctrine());
+        $process = $videoHandler->process();
 
-            if($form->isValid())
-            {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
-                $em->flush();
-            }
+        if ($process) {
+            $this->get('session')->setFlash('notice', 'Thanks');
         }
 
         return array('form'=>$form->createView());
