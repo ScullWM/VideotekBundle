@@ -3,9 +3,15 @@
 namespace Swm\VideotekBundle\Service;
 
 use Swm\VideotekBundle\Entity\Video;
+use Swm\VideotekBundle\Service\VideoService\VimeoVideoService
+use Swm\VideotekBundle\Service\VideoService\YoutubeVideoService;
+use Swm\VideotekBundle\Service\VideoService\DailymotionVideoService;
+use Swm\VideotekBundle\Exception\VideoException;
 
 class VideoService
 {
+    private $specificVideoService;
+
     /**
      * Get Extended Video with more informations
      *
@@ -16,8 +22,22 @@ class VideoService
      */
     public function getInfoFromVideo(Video $video)
     {
-        $youtubeId = $this->getYoutubeId($video->getUrl());
-        $extended  = $this->getYoutubeInfoById($youtubeId);
+        switch (true) {
+            case strstr($video->getUrl(),'youtu'):
+                $this->specificVideoService = new YoutubeVideoService();
+                break;
+            case strstr($video->getUrl(),'daily'):
+                $this->specificVideoService = new DailymotionVideoService();
+                break;
+            case strstr($video->getUrl(),'vimeo'):
+                $this->specificVideoService = new VimeoVideoService();
+                break;
+            default:
+                throw new VideoException(sprintf('No hosting service found for %s', $video->getUrl()));
+        }
+
+        $videoId   = $this->specificVideoService->getVideoId($video->getUrl());
+        $extended  = $this->specificVideoService->getThumbnails($youtubeId);
 
         $videoExtended = new \StdClass();
         $videoExtended->videoModel = $video;
@@ -26,33 +46,5 @@ class VideoService
         $videoExtended->img_big    = $extended['img_big'];
 
         return (object) $videoExtended;
-    }
-
-    /**
-     * Return Youtube id from url
-     * 
-     * @param  string $url [description]
-     * @return string      [description]
-     */
-    private function getYoutubeId($url){
-        $url_string = parse_url($url, PHP_URL_QUERY);
-        parse_str($url_string, $args);
-        return (string) isset($args['v']) ? $args['v'] : false;
-    }
-
-    /**
-     * Generate extended information for a youtube video
-     * 
-     * @param  string $youtubeId [description]
-     * @return array            [description]
-     */
-    private function getYoutubeInfoById($youtubeId)
-    {
-        $video = '<iframe width="560" height="315" src="http://www.youtube.com/embed/'.$youtubeId.'" frameborder="0" allowfullscreen></iframe>';
-        $img_small = 'http://img.youtube.com/vi/'.$youtubeId.'/0.jpg';
-        $img_big   = 'http://img.youtube.com/vi/'.$youtubeId.'/0.jpg';
-
-        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big);
-        return (array) $code;
     }
 }
