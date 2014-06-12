@@ -3,6 +3,7 @@
 namespace Swm\VideotekBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Swm\VideotekBundle\Entity\Video
@@ -45,6 +46,7 @@ class Video
     /**
      * @var string $slug
      *
+     * @Gedmo\Slug(fields={"title", "id"})
      * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;    

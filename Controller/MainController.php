@@ -118,7 +118,7 @@ class MainController extends Controller
         $process = $videoHandler->process($entity);
 
         if ($process) {
-            $this->get('session')->setFlash('notice', 'Thanks');
+            $this->get('session')->getFlashBag()->add('notice', 'Thanks');
         }
 
         return array('form'=>$form->createView());

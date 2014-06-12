@@ -30,6 +30,7 @@ class VideoHandler
 
         $video->setHits(0);
         $video->setFav(0);
+        $video->setStatut(0);
 
         $em = $this->doctrine->getManager();
         $em->persist($video);
