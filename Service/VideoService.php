@@ -16,7 +16,6 @@ class VideoService
      * Get Extended Video with more informations
      *
      * @version  06-06-2014
-     * @todo  get equivalent for vimeo/dailymotion videos
      * @param  Video  $video [description]
      * @return object        [description]
      */

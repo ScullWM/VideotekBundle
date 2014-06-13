@@ -1,8 +1,14 @@
 {
+	"name": "scullwm/VideotekBundle",
+	"description": "Bundle video",
     "require": {
-        "stof/doctrine-extensions-bundle": "dev-master",
+        "stof/doctrine-extensions-bundle": "1.1.*@dev",
         "braincrafted/bootstrap-bundle": "~2.0",
         "genemu/form-bundle": "~2.2",
         "oyejorge/less.php": "~1.5"
-    }
+    },
+    "autoload": {
+        "psr-0": { "Swm\\VideotekBundle": "" }
+    },
+    "target-dir": "Swm/VideotekBundle"
 }
