@@ -94,10 +94,14 @@ class MainController extends Controller
      */
     public function videoAction(Video $video)
     {
+        $video->setView();
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = $videoservice->getInfoFromVideo($video);
 
-        $moreVideos = $this->get('doctrine')->getManager()->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
+        $em         = $this->get('doctrine')->getManager();
+        $moreVideos = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
+        $em->persist($video);
+        $em->flush();
 
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
     }

@@ -271,4 +271,9 @@ class Video
         }
         return $this;
     }
+
+    public function setView()
+    {
+        $this->hits++;
+    }
 }
