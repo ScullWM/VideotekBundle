@@ -7,3 +7,6 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
     swm_videotek.videoservice:
         class: Swm\VideotekBundle\Service\VideoService
+    swm_videotek.distanthostingservice:
+        class: Swm\VideotekBundle\Service\DistantHostingService
+        arguments: [@swm_videotek.videoservice, %swm_videotek.path.thumbnails%]

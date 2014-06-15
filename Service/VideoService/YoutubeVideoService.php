@@ -31,7 +31,7 @@ class YoutubeVideoService implements VideoServiceInterface
         $img_small = 'http://img.youtube.com/vi/'.$id.'/0.jpg';
         $img_big   = 'http://img.youtube.com/vi/'.$id.'/0.jpg';
 
-        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big);
+        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big, 'id'=>$id);
         return (array) $code;
     }
 }

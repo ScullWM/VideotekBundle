@@ -2,6 +2,7 @@
 
 namespace Swm\VideotekBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,12 +19,31 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('swm_videotek');
+        $rootNode = $treeBuilder->root('swm_videotek');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $this->addpath($rootNode);
 
         return $treeBuilder;
+    }
+
+    /**
+     * Add Configuration Captcha
+     *
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function addPath(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('path')
+                    ->canBeUnset()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('thumbnails')->defaultValue('thumbnails')->end()
+                        ->variableNode('test')->defaultValue('test')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

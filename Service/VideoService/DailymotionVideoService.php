@@ -30,7 +30,7 @@ class DailymotionVideoService implements VideoServiceInterface
         $img_small = 'http://www.dailymotion.com/thumbnail/160x120/video/'.$id;
         $img_big   = 'http://www.dailymotion.com/thumbnail/160x120/video/'.$id;
 
-        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big);
+        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big, 'id'=>$id);
         return (array) $code;
     }
 }

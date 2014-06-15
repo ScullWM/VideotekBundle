@@ -30,7 +30,7 @@ class VimeoVideoService implements VideoServiceInterface
         $img_small = '';
         $img_big   = '';
 
-        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big);
+        $code = array('video'=>$video,'img_small'=>$img_small,'img_big'=>$img_big, 'id'=>$id);
         return (array) $code;
     }
 }

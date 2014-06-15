@@ -39,6 +39,7 @@ class VideoService
         $extended  = $this->specificVideoService->getThumbnails($videoId);
 
         $videoExtended = new \StdClass();
+        $videoExtended->id         = $videoId;
         $videoExtended->videoModel = $video;
         $videoExtended->videoInfo  = $extended['video'];
         $videoExtended->img_small  = $extended['img_small'];

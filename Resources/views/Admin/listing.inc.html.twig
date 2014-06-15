@@ -1,0 +1,7 @@
+<div class="row">
+    {% for video in videos %}
+        <div class="col-md-1">
+            <a href="{{ path('video_info', {'id':video.videoModel.id}) }}" class="titlevideo"><img src="{{video.img_small}}" class="img-thumbnail" alt="" title="{{video.videoModel.title | truncate(30, true, '...')}}"></a>
+        </div>
+    {% endfor %}
+</div>
