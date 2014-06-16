@@ -7,6 +7,6 @@ class PhpwayProvider implements CallProviderInterface
     public function getLocal($url, $filename, $path)
     {
         file_put_contents($path.'/'.$filename, file_get_contents($url));
-        return new splFileInfo($path.'/'.$filename);
+        return new \splFileInfo($path.'/'.$filename);
     }
 }

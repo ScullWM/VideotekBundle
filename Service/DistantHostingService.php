@@ -4,8 +4,7 @@ namespace Swm\VideotekBundle\Service;
 
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Service\VideoService;
-use Swm\VideotekBundle\Service\DistantHosting\PhpwayProvider;
-use Swm\VideotekBundle\Service\DistantHosting\CurlwayProvider;
+use Guzzle\Http\Client as HttpClient;
 
 class DistantHostingService
 {
@@ -17,20 +16,19 @@ class DistantHostingService
         $this->videoService = $videoService;
         $this->thumbPath = $thumbPath;
 
-        if(ini_get('allow_url_fopen'))
-        {
-            $this->distantToLocal = new PhpwayProvider();
-        } else {
-            $this->distantToLocal = new CurlwayProvider();
-        }
+        $this->distantToLocal = new HttpClient();
     }
 
     public function process(Video $video)
     {
         $videoExtended = $this->videoService->getInfoFromVideo($video);
-
         $url   = $videoExtended->videoModel->geturl();
-        $file  = $this->distantToLocal->getLocal($url, $videoExtended->id.'.jpg', $this->thumbPath);
+
+        try {
+            $file = $this->distantToLocal->get($url)->setResponseBody($this->thumbPath)->send();
+        } catch (\Exception $e) {
+            return $e;
+        }
 
         return (array) $file;
     }

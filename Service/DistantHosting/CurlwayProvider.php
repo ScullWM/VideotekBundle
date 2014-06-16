@@ -14,6 +14,6 @@ class CurlwayProvider
         curl_close($ch);
         fclose($fp);
 
-        return new splFileInfo($path.'/'.$filename);
+        return new \splFileInfo($path.'/'.$filename);
     }
 }
