@@ -6,7 +6,7 @@
         "braincrafted/bootstrap-bundle": "~2.0",
         "genemu/form-bundle": "~2.2",
         "oyejorge/less.php": "~1.5",
-        "guzzle/http": "3.7.*@dev"
+        "guzzle/http": "~3.7"
     },
     "autoload": {
         "psr-0": { "Swm\\VideotekBundle": "" }

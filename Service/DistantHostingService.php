@@ -10,6 +10,7 @@ class DistantHostingService
 {
     private $videoService;
     private $distantToLocal;
+    private $thumbPath;
 
     public function __construct(VideoService $videoService, $thumbPath)
     {
