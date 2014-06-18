@@ -4,20 +4,22 @@ namespace Swm\VideotekBundle\Service;
 
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Service\VideoService;
-use Guzzle\Http\Client as HttpClient;
+use Swm\VideotekBundle\Adapter\HttpAdapterInterface;
+use Swm\VideotekBundle\Exception\HttpAdapterException;
 
 class DistantHostingService
 {
     private $videoService;
-    private $distantToLocal;
+    private $httpClient;
     private $thumbPath;
 
-    public function __construct(VideoService $videoService, $thumbPath)
+    public function __construct(VideoService $videoService, $thumbPath, $httpClient)
     {
-        $this->videoService = $videoService;
-        $this->thumbPath = $thumbPath;
+        if(!($httpClient instanceof HttpAdapterInterface)) throw new HttpAdapterException("HttpClient must be injected before calling API");
 
-        $this->distantToLocal = new HttpClient();
+        $this->videoService = $videoService;
+        $this->thumbPath    = $thumbPath;
+        $this->httpClient   = $httpClient;
     }
 
     public function process(Video $video)
@@ -25,11 +27,7 @@ class DistantHostingService
         $videoExtended = $this->videoService->getInfoFromVideo($video);
         $url   = $videoExtended->videoModel->geturl();
 
-        try {
-            $file = $this->distantToLocal->get($url)->setResponseBody($this->thumbPath)->send();
-        } catch (\Exception $e) {
-            return $e;
-        }
+        $file = $this->httpClient->get($url);
 
         return (array) $file;
     }

@@ -9,4 +9,6 @@ services:
         class: Swm\VideotekBundle\Service\VideoService
     swm_videotek.distanthostingservice:
         class: Swm\VideotekBundle\Service\DistantHostingService
-        arguments: [@swm_videotek.videoservice, %swm_videotek.path.thumbnails%]
+        arguments: [@swm_videotek.videoservice, %swm_videotek.path.thumbnails%, @swm_videotek.http.adapter]
+    swm_videotek.http.adapter:
+        class: Swm\VideotekBundle\Adapter\GuzzleAdapter
