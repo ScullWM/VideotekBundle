@@ -2,14 +2,9 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12">
-		{{videos|length}} vidéos
+		{% for img in imgs %}
+            <img src="thumbs/{{img}}" alt="">
+        {% endfor %}
 	</div>
-</div>
-<div class="row">
-    {% for file in files %}
-        <div class="col-md-1">
-            <a href="{{ path('video_info', {'id':video.videoModel.id}) }}" class="titlevideo"><img src="{{video.img_small}}" class="img-thumbnail" alt="" title="{{video.videoModel.title | truncate(30, true, '...')}}"></a>
-        </div>
-    {% endfor %}
 </div>
 {% endblock %}

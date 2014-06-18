@@ -48,6 +48,10 @@ class AdminController extends Controller
         $distantHostingService  = $this->get('swm_videotek.distanthostingservice');
         $files = array_map(array($distantHostingService, 'process'), $videos);
 
-        return array('files'=>$files, 'videos'=>$videos);
+        $basedir = $this->container->getParameter('swm_videotek.path.thumbnails');
+        $imgs = glob($basedir.'*.jpg');
+        $imgs = array_map(function($d)use($basedir){ return str_replace($basedir,'',$d);}, $imgs);
+
+        return array('files'=>$files, 'videos'=>$videos, 'imgs'=>$imgs);
     }
 }

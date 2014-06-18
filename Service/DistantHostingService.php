@@ -25,10 +25,14 @@ class DistantHostingService
     public function process(Video $video)
     {
         $videoExtended = $this->videoService->getInfoFromVideo($video);
-        $url   = $videoExtended->videoModel->geturl();
-
-        $file = $this->httpClient->get($url);
+        $url   = $videoExtended->img_big;
+        $file  = $this->httpClient->get($url, $this->getLocalFilename($videoExtended));
 
         return (array) $file;
+    }
+
+    private function getLocalFilename($videoExtended)
+    {
+        return (string) $this->thumbPath.$videoExtended->id.'.jpg';
     }
 }

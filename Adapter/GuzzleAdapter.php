@@ -2,7 +2,7 @@
 
 namespace Swm\VideotekBundle\Adapter;
 
-use Guzzle\HttpClient;
+use GuzzleHttp\Client as HttpClient;
 
 class GuzzleAdapter implements HttpAdapterInterface
 {
@@ -14,8 +14,17 @@ class GuzzleAdapter implements HttpAdapterInterface
     }
 
 
-    public function get($path)
+    public function get($url, $path)
     {
         if(empty($this->httpClient)) $this->init();
+
+        $response = $this->httpClient->get($url);
+        $body = $response->getBody();
+
+
+        var_dump($url, $body);
+
+
+        return new \SplFileInfo($path);
     }
 }

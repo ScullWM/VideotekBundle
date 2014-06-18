@@ -4,5 +4,5 @@ namespace Swm\VideotekBundle\Adapter;
 
 interface HttpAdapterInterface
 {
-    public function get($path);
+    public function get($url, $path);
 }
