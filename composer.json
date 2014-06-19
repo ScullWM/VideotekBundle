@@ -6,7 +6,8 @@
         "braincrafted/bootstrap-bundle": "~2.0",
         "genemu/form-bundle": "~2.2",
         "oyejorge/less.php": "~1.5",
-        "guzzlehttp/guzzle": "4.*"
+        "guzzlehttp/guzzle": "4.*",
+        "madcoda/php-youtube-api": "dev-master"
     },
     "autoload": {
         "psr-0": { "Swm\\VideotekBundle": "" }

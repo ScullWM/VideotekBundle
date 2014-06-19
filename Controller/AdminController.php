@@ -5,6 +5,7 @@ namespace Swm\VideotekBundle\Controller;
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Form\VideoType;
 use Swm\VideotekBundle\Form\Handler\VideoHandler;
+use Madcoda\Youtube;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -53,5 +54,21 @@ class AdminController extends Controller
         $imgs = array_map(function($d)use($basedir){ return str_replace($basedir,'',$d);}, $imgs);
 
         return array('files'=>$files, 'videos'=>$videos, 'imgs'=>$imgs);
+    }
+
+    /**
+     * @Route("/search", name="video_admin_search")
+     * @Method({"GET", "POST"})
+     * @Template("SwmVideotekBundle:Admin:search.html.twig")
+     */
+    public function searchAction(Request $request)
+    {
+        if("POST" != $this->request->getMethod())
+        {
+            $scrapper = $this->get('swm_videotek.videoscrapper');
+            $result = $scrapper->search($request->get('q'));
+        }
+
+        return array();
     }
 }

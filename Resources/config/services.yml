@@ -12,3 +12,6 @@ services:
         arguments: [@swm_videotek.videoservice, %swm_videotek.path.thumbnails%, @swm_videotek.http.adapter]
     swm_videotek.http.adapter:
         class: Swm\VideotekBundle\Adapter\GuzzleAdapter
+    swm_videotek.videoscrapper:
+        class: Swm\VideotekBundle\Scrapper\VideoScrapper
+        arguments: [@request_stack]
