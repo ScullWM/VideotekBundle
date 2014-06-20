@@ -5,7 +5,6 @@ namespace Swm\VideotekBundle\Controller;
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Form\VideoType;
 use Swm\VideotekBundle\Form\Handler\VideoHandler;
-use Madcoda\Youtube;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -63,10 +62,14 @@ class AdminController extends Controller
      */
     public function searchAction(Request $request)
     {
-        if("POST" != $this->request->getMethod())
+        if("POST" === $request->getMethod())
         {
-            $scrapper = $this->get('swm_videotek.videoscrapper');
-            $result = $scrapper->search($request->get('q'));
+            $scrapper = new VideoScrapper($service);
+            $scrapper->setYoutubeKey();
+            $scrapper->setDailymotionKey();
+            $scrapper->setVimeoKey();
+
+            $result   = $scrapper->search($request->get('q'));
         }
 
         return array();
