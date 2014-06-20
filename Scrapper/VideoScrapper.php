@@ -3,8 +3,7 @@
 namespace Swm\VideotekBundle\Scrapper;
 
 use Swm\VideotekBundle\Scrapper\YoutubeScrapper;
-use Swm\VideotekBundle\Scrapper\ViemoScrapper;
-use Swm\VideotekBundle\Scrapper\DailymotionScrapper;
+use Swm\VideotekBundle\Scrapper\VimeoScrapper;
 use Swm\VideotekBundle\Scrapper\DailymotionScrapper;
 use Swm\VideotekBundle\Scrapper\VideoScrapper;
 use Swm\VideotekBundle\Exception\ScrapperException;

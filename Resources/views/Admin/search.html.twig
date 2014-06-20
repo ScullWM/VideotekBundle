@@ -3,9 +3,30 @@
 <div class="row">
     <div class="col-md-12">
     <form action="" method="post">
-        <input type="text" name="q">
+        <input type="text" name="keyword">
+
+        <select name="hostservice" id="">
+            <option value="y">Youtube</option>
+            <option value="d">Dailymotion</option>
+            <option value="v">Vimeo</option>
+        </select>
+
         <input type="submit">
     </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span-md-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Panel heading without title</div>
+            <ul class="list-group">
+                {% for item in result %}
+                <li class="list-group-item">Cras justo odio</li>
+                {% endfor %}
+            </ul>
+        </div>    
     </div>
 </div>
 {% endblock %}

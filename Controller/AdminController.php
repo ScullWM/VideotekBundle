@@ -6,10 +6,13 @@ use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Form\VideoType;
 use Swm\VideotekBundle\Form\Handler\VideoHandler;
 use Symfony\Component\HttpFoundation\Request;
+use Swm\VideotekBundle\Service\SearchQuery;
+use Swm\VideotekBundle\Scrapper\VideoScrapper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
 * @Route("/admin")
@@ -58,20 +61,25 @@ class AdminController extends Controller
     /**
      * @Route("/search", name="video_admin_search")
      * @Method({"GET", "POST"})
+     * @ParamConverter(
+     *     name="searchQuery",
+     *     converter="search_query"
+     * )
      * @Template("SwmVideotekBundle:Admin:search.html.twig")
      */
-    public function searchAction(Request $request)
+    public function searchAction(SearchQuery $searchQuery)
     {
-        if("POST" === $request->getMethod())
+        $result = array();
+        if(!empty($searchQuery->keyword))
         {
-            $scrapper = new VideoScrapper($service);
+            $scrapper = new VideoScrapper($searchQuery->hostService);
             $scrapper->setYoutubeKey();
             $scrapper->setDailymotionKey();
             $scrapper->setVimeoKey();
 
-            $result   = $scrapper->search($request->get('q'));
+            $result   = $scrapper->search($searchQuery->keyword);
         }
 
-        return array();
+        return array('result'=>$result);
     }
 }
