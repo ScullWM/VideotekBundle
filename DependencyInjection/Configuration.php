@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('swm_videotek');
 
         $this->addpath($rootNode);
+        $this->addkeys($rootNode);
 
         return $treeBuilder;
     }
@@ -41,6 +42,28 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->variableNode('thumbnails')->defaultValue('thumbnails')->end()
                         ->variableNode('test')->defaultValue('test')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * Add Configuration Captcha
+     *
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function addKeys(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('keys')
+                    ->canBeUnset()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('youtubekey')->defaultValue('youtubekey')->end()
+                        ->variableNode('vimeokey')->defaultValue('vimeokey')->end()
+                        ->variableNode('dailymotionkey')->defaultValue('dailymotionkey')->end()
                     ->end()
                 ->end()
             ->end()

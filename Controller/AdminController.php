@@ -73,9 +73,9 @@ class AdminController extends Controller
         if(!empty($searchQuery->keyword))
         {
             $scrapper = new VideoScrapper($searchQuery->hostService);
-            $scrapper->setYoutubeKey();
-            $scrapper->setDailymotionKey();
-            $scrapper->setVimeoKey();
+            $scrapper->setYoutubeKey($this->container->getParameter('swm_videotek.keys.youtubekey'));
+            $scrapper->setDailymotionKey($this->container->getParameter('swm_videotek.keys.dailymotionkey'));
+            $scrapper->setVimeoKey($this->container->getParameter('swm_videotek.keys.vimeokey'));
 
             $result   = $scrapper->search($searchQuery->keyword);
         }

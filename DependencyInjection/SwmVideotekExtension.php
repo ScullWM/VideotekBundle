@@ -26,5 +26,8 @@ class SwmVideotekExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('swm_videotek.path.thumbnails', $config['path']['thumbnails']);
+        $container->setParameter('swm_videotek.keys.youtubekey', $config['keys']['youtubekey']);
+        $container->setParameter('swm_videotek.keys.dailymotionkey', $config['keys']['dailymotionkey']);
+        $container->setParameter('swm_videotek.keys.vimeokey', $config['keys']['vimeokey']);
     }
 }

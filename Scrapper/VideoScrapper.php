@@ -19,7 +19,7 @@ class VideoScrapper
     {
         switch ($service) {
             case 'y':
-                $scrapperService = new YoutubeScrapper($youtubeKey);
+                $scrapperService = new YoutubeScrapper($this->youtubeKey);
                 break;
             case 'd':
                 $scrapperService = new DailymotionScrapper($dailymotionKey);
