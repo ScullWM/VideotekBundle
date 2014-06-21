@@ -29,8 +29,8 @@ class VideoHandler
         if(!$this->form->isValid()) return false;
 
         $video->setHits(0);
-        $video->setFav(0);
-        $video->setStatut(0);
+        $video->setFav(false);
+        $video->setStatut(false);
 
         $em = $this->doctrine->getManager();
         $em->persist($video);
@@ -41,8 +41,8 @@ class VideoHandler
         return true;
     }
 
-    protected function onSuccess()
+    protected function onSuccess(Video $video)
     {
-
+        if($video) return true;
     }
 }

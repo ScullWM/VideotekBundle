@@ -22,10 +22,10 @@ class VideoScrapper
                 $scrapperService = new YoutubeScrapper($this->youtubeKey);
                 break;
             case 'd':
-                $scrapperService = new DailymotionScrapper($dailymotionKey);
+                $scrapperService = new DailymotionScrapper($this->dailymotionKey);
                 break;
             case 'v':
-                $scrapperService = new VimeoScrapper($vimeoKey);
+                $scrapperService = new VimeoScrapper($this->vimeoKey);
                 break;
             default:
                 throw new ScrapperException('No hosting scrapper found');
