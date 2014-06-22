@@ -15,7 +15,7 @@ class VideoScrapper
     private $dailymotionKey = null;
     private $viemoKey = null;
 
-    public function __construct($service)
+    public function setScrapperService($service)
     {
         switch ($service) {
             case 'y':
