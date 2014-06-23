@@ -25,18 +25,22 @@ class YoutubeScrapper extends ModelScrapper implements VideoScrapperInterface
 
     public function seeResult($id)
     {
-        return $this->youtube->getVideoInfo($id);
+        $video = $this->youtube->getVideoInfo($id);
+
+        return $this->formatResult($video);
     }
 
     protected function formatResult($data)
     {
+        $videoId = (isset($data->id))?$data->id:$data->id->videoId;
+
         $formatedObject = new VideoFromApiModel();
         $formatedObject->title = $data->snippet->title;
         $formatedObject->description = $data->snippet->description;
-        $formatedObject->url = 'https://www.youtube.com/watch?v='.$data->id->videoId;
+        $formatedObject->url = 'https://www.youtube.com/watch?v='.$videoId;
         $formatedObject->img = $data->snippet->thumbnails->default->url;
         $formatedObject->service = 'y';
-        $formatedObject->videoid = $data->id->videoId;
+        $formatedObject->videoid = $videoId;
 
         return $formatedObject;
     }

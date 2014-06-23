@@ -6,8 +6,9 @@ use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Form\VideoType;
 use Swm\VideotekBundle\Form\Handler\VideoHandler;
 use Symfony\Component\HttpFoundation\Request;
-use Swm\VideotekBundle\Service\SearchQuery;
+use Swm\VideotekBundle\Model\SearchQueryModel;
 use Swm\VideotekBundle\Scrapper\VideoScrapper;
+use Swm\VideotekBundle\Model\VideoFromApiRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -72,11 +73,7 @@ class AdminController extends Controller
         $result = array();
         if(!empty($searchQuery->keyword))
         {
-            $scrapper = new VideoScrapper();
-            $scrapper->setYoutubeKey($this->container->getParameter('swm_videotek.keys.youtubekey'));
-            $scrapper->setDailymotionKey($this->container->getParameter('swm_videotek.keys.dailymotionkey'));
-            $scrapper->setVimeoKey($this->container->getParameter('swm_videotek.keys.vimeokey'));
-            $scrapper->setScrapperService($searchQuery->hostService);
+            $scrapper = $this->getScrapper($searchQuery->hostService);
 
             $result   = $scrapper->search($searchQuery->keyword);
         }
@@ -85,17 +82,34 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/doscrapp/{service}/{videoid}", name="video_admin_doscrapp")
+     * @Route("/doscrapp/{hostservice}/{videoid}", name="video_admin_doscrapp")
      * @Method({"GET"})
+     * @ParamConverter(
+     *     name="searchQuery",
+     *     converter="search_query"
+     * )
      */
-    public function doscrappAction(Request $request)
+    public function doscrappAction(SearchQueryModel $searchQuery)
+    {
+        $scrapper = $this->getScrapper($searchQuery->hostService);
+        $result   = $scrapper->seeResult($searchQuery->videoid);
+
+
+    }
+
+    /**
+     * Hummm... Haaaa... WTF are you doing here?
+     * @param  [type] $service [description]
+     * @return [type]          [description]
+     */
+    private function getScrapper($service)
     {
         $scrapper = new VideoScrapper();
         $scrapper->setYoutubeKey($this->container->getParameter('swm_videotek.keys.youtubekey'));
         $scrapper->setDailymotionKey($this->container->getParameter('swm_videotek.keys.dailymotionkey'));
         $scrapper->setVimeoKey($this->container->getParameter('swm_videotek.keys.vimeokey'));
-        $scrapper->setScrapperService($searchQuery->hostService);
+        $scrapper->setScrapperService($service);
 
-        $result   = $scrapper->search($searchQuery->keyword);
+        return $scrapper;
     }
 }

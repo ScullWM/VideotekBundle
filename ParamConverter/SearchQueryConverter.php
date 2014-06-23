@@ -11,7 +11,7 @@ class SearchQueryConverter implements ParamConverterInterface
 {
     public function apply(Request $request, ParamConverter $configuration)
     {
-        $searchQuery = new SearchQueryModel($request->get('keyword'), $request->get('hostservice'));
+        $searchQuery = new SearchQueryModel($request->get('keyword'), $request->get('hostservice'), $request->get('videoid'));
         $request->attributes->set($configuration->getName(), $searchQuery);
     }
 

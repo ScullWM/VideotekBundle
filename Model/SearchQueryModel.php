@@ -4,12 +4,14 @@ namespace Swm\VideotekBundle\Model;
 
 class SearchQueryModel
 {
-    private $keyword;
-    private $hostService;
+    public $keyword;
+    public $hostService;
+    public $videoid;
 
-    public function __construct($keyword = null, $hostService = 'y')
+    public function __construct($keyword = null, $hostService = 'y', $videoid = null)
     {
         $this->keyword = $keyword;
         $this->hostService = $hostService;
+        $this->videoid = $videoid;
     }
 }
