@@ -83,4 +83,19 @@ class AdminController extends Controller
 
         return array('result'=>$result);
     }
+
+    /**
+     * @Route("/doscrapp/{service}/{videoid}", name="video_admin_doscrapp")
+     * @Method({"GET"})
+     */
+    public function doscrappAction(Request $request)
+    {
+        $scrapper = new VideoScrapper();
+        $scrapper->setYoutubeKey($this->container->getParameter('swm_videotek.keys.youtubekey'));
+        $scrapper->setDailymotionKey($this->container->getParameter('swm_videotek.keys.dailymotionkey'));
+        $scrapper->setVimeoKey($this->container->getParameter('swm_videotek.keys.vimeokey'));
+        $scrapper->setScrapperService($searchQuery->hostService);
+
+        $result   = $scrapper->search($searchQuery->keyword);
+    }
 }

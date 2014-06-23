@@ -1,11 +1,11 @@
 <?php
 
-namespace Swm\VideotekBundle\Service;
+namespace Swm\VideotekBundle\Model;
 
-class SearchQuery
+class SearchQueryModel
 {
-    public $keyword;
-    public $hostService;
+    private $keyword;
+    private $hostService;
 
     public function __construct($keyword = null, $hostService = 'y')
     {
