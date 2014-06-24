@@ -6,14 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SearchType extends AbstractType
+class VideoAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('url')
-            ->add('service')
-            ;
+            ->add('title')
+            ->add('description')
+            ->add('tags')
+            ->add('statut')
+            ->add('hits')
+            ->add('fav');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -25,6 +29,6 @@ class SearchType extends AbstractType
 
     public function getName()
     {
-        return 'swm_videotekbundle_search';
+        return 'swm_videotekbundle_videoadmin';
     }
 }
