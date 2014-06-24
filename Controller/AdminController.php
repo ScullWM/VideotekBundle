@@ -92,9 +92,15 @@ class AdminController extends Controller
     public function doscrappAction(SearchQueryModel $searchQuery)
     {
         $scrapper = $this->getScrapper($searchQuery->hostService);
-        $result   = $scrapper->seeResult($searchQuery->videoid);
+        $video    = $scrapper->seeResult($searchQuery->videoid);
 
+        $em       = $this->get('doctrine')->getManager();
+        $em->persist($video);
+        $em->flush();
 
+        $this->get('session')->getFlashBag()->add('success', 'Video saved !');
+
+        return $this->redirect($this->generateUrl('search'));
     }
 
     /**

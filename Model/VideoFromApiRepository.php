@@ -15,5 +15,7 @@ class VideoFromApiRepository
         $video->setHits(0);
         $video->setFav(true);
         $video->setStatut(true);
+
+        return $video;
     }
 }
