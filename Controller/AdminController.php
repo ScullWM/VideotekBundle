@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Swm\VideotekBundle\Model\SearchQueryModel;
 use Swm\VideotekBundle\Scrapper\VideoScrapper;
 use Swm\VideotekBundle\Model\VideoFromApiRepository;
+use Swm\VideotekBundle\Form\VideoAdminType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,7 +31,7 @@ class AdminController extends Controller
     public function indexAction()
     {
         $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->getLast();
+        $videos = $em->getRepository("SwmVideotekBundle:Video")->getLast(100);
 
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
@@ -104,6 +105,22 @@ class AdminController extends Controller
         $this->get('session')->getFlashBag()->add('success', 'Video saved !');
 
         return $this->redirect($this->generateUrl('video_admin_search'));
+    }
+
+    /**
+     *
+     * @Route("/edit/{id}", name="video_admin_edit")
+     * @Method({"GET","POST"})
+     * @Template("SwmVideotekBundle:Admin:edit.html.twig")
+     */
+    public function editAction(Video $video)
+    {
+        $form = $this->createForm(new VideoAdminType(), $video);
+
+        $videoservice  = $this->get('swm_videotek.videoservice');
+        $videoExtended = $videoservice->getInfoFromVideo($video);
+
+        return array('form'=>$form->createView(), 'video'=>$video, 'videoExtended'=>$videoExtended);
     }
 
     /**
