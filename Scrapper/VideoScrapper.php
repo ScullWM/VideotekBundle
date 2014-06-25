@@ -13,7 +13,7 @@ class VideoScrapper
     private $scrapperService;
     private $youtubeKey = null;
     private $dailymotionKey = null;
-    private $viemoKey = null;
+    private $vimeoKey = null;
 
     public function setScrapperService($service)
     {

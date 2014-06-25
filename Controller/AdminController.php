@@ -68,7 +68,7 @@ class AdminController extends Controller
      * )
      * @Template("SwmVideotekBundle:Admin:search.html.twig")
      */
-    public function searchAction(SearchQuery $searchQuery)
+    public function searchAction(SearchQueryModel $searchQuery)
     {
         $result = array();
         if(!empty($searchQuery->keyword))
@@ -92,7 +92,10 @@ class AdminController extends Controller
     public function doscrappAction(SearchQueryModel $searchQuery)
     {
         $scrapper = $this->getScrapper($searchQuery->hostService);
-        $video    = $scrapper->seeResult($searchQuery->videoid);
+        $videoTmp = $scrapper->seeResult($searchQuery->videoid);
+
+        $VideoApiService = new VideoFromApiRepository();
+        $video = $VideoApiService->convertToEntity($videoTmp);
 
         $em       = $this->get('doctrine')->getManager();
         $em->persist($video);
@@ -100,7 +103,7 @@ class AdminController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', 'Video saved !');
 
-        return $this->redirect($this->generateUrl('search'));
+        return $this->redirect($this->generateUrl('video_admin_search'));
     }
 
     /**
