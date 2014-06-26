@@ -1,40 +1,44 @@
 {% extends "SwmVideotekBundle:Admin:layout.html.twig" %}
 {% block content %}
 <div class="row">
-    <div class="col-md-12">
-    <form action="" method="post">
-        <input type="text" name="keyword">
-
-        <select name="hostservice" id="">
-            <option value="y">Youtube</option>
-            <option value="d">Dailymotion</option>
-            <option value="v">Vimeo</option>
-        </select>
-
-        <input type="submit">
-    </form>
+    <div class="col-md-6">
+        <form action="" method="post">
+            <div class="input-group">
+                <div class="input-group-btn search-panel">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span id="search_concept">Service hosting</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a data-service="y">Youtube</a></li>
+                      <li><a data-service="d">Dailymotion</a></li>
+                      <li><a data-service="v">Vimeo</a></li>
+                    </ul>
+                </div>
+                <input type="hidden" name="hostservice" value="y" id="search_param">         
+                <input type="text" class="form-control" name="keyword" placeholder="Search term...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        {% for t in tags %}
+            <span class="label label-info"><a href="{{path('video_admin_search', {hostservice:'y',keyword:t.tag})}}">{{ t.tag }}</a></span>
+        {% endfor %}
     </div>
 </div>
 
+{% for item in result %}
 <div class="row">
-    <div class="span-md-12">
-
-        <div class="panel panel-default">
-            <div class="panel-heading">Scrapp this videos:</div>
-            <ul class="list-group">
-                {% for item in result %}
-                <li class="list-group-item">
-                    <div style="height:200px">
-                    {{item.title}} <br />
-                    {{item.description}}
-                    <a href="{{path('video_admin_doscrapp', {'service':item.service,'videoid':item.videoid})}}" class="btn btn-default">Scrapp</a>
-
-                    <p><img class="pull-left" src="{{item.img}}" /></p>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>    
+    <div class="col-md-2">
+        <img class="img-thumbnail" src="{{item.img}}" />
+    </div>
+    <div class="col-md-10">
+        {{item.title}} <br />
+        <p>{{item.description}}</p>
+        <a href="{{path('video_admin_doscrapp', {'hostservice':item.service,'videoid':item.videoid})}}" class="btn btn-default">Scrapp</a>
     </div>
 </div>
+{% endfor %}
 {% endblock %}

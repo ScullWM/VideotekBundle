@@ -79,7 +79,10 @@ class AdminController extends Controller
             $result   = $scrapper->search($searchQuery->keyword);
         }
 
-        return array('result'=>$result);
+        $em   = $this->get('doctrine')->getManager();
+        $tags = $em->getRepository("SwmVideotekBundle:Tag")->getAll();
+
+        return array('result'=>$result, 'tags'=>$tags);
     }
 
     /**
@@ -98,7 +101,7 @@ class AdminController extends Controller
         $VideoApiService = new VideoFromApiRepository();
         $video = $VideoApiService->convertToEntity($videoTmp);
 
-        $em       = $this->get('doctrine')->getManager();
+        $em    = $this->get('doctrine')->getManager();
         $em->persist($video);
         $em->flush();
 

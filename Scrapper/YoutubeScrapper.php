@@ -32,7 +32,7 @@ class YoutubeScrapper extends ModelScrapper implements VideoScrapperInterface
 
     protected function formatResult($data)
     {
-        $videoId = (isset($data->id))?$data->id:$data->id->videoId;
+        $videoId = (isset($data->id) && is_string($data->id))?$data->id:$data->id->videoId;
 
         $formatedObject = new VideoFromApiModel();
         $formatedObject->title = $data->snippet->title;
