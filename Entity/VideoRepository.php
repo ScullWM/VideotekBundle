@@ -18,7 +18,7 @@ class VideoRepository extends EntityRepository
 
     public function getByTag($tag, $limit = 12)
     {
-        return $this->createQueryBuilder('v')->join('v.tags', 't')->setMaxResults($limit)->where($qb->expr()->in('t.id', $id))->orderBy('v.hits', 'DESC')->getQuery()->getResult();
+        return $this->createQueryBuilder('v')->join('v.tags', 't')->setMaxResults($limit)->where('t.id = :id')->setParameter('id', $tag)->orderBy('v.hits', 'DESC')->getQuery()->getResult();
     }
 
     public function getByFav($limit = 12)

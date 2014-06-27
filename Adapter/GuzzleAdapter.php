@@ -3,6 +3,7 @@
 namespace Swm\VideotekBundle\Adapter;
 
 use GuzzleHttp\Stream;
+use GuzzleHttp\Client;
 
 class GuzzleAdapter implements HttpAdapterInterface
 {
@@ -13,4 +14,13 @@ class GuzzleAdapter implements HttpAdapterInterface
 
         return new \SplFileInfo($path);
     }
+
+    public function getJson($url)
+    {
+        $client = new Client();
+        $res = $client->get($url);
+
+        return (array) $res->json();
+    }
+
 }

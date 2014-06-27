@@ -99,11 +99,11 @@ class AdminController extends Controller
         $videoTmp = $scrapper->seeResult($searchQuery->videoid);
 
         $VideoApiService = new VideoFromApiRepository();
-        $video = $VideoApiService->convertToEntity($videoTmp);
+        /*$video = $VideoApiService->convertToEntity($videoTmp);
 
         $em    = $this->get('doctrine')->getManager();
         $em->persist($video);
-        $em->flush();
+        $em->flush();*/
 
         return $this->redirect($this->generateUrl('video_admin_search'));
     }

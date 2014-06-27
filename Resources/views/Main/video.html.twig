@@ -28,7 +28,7 @@
         </ul>
 
         {% for t in video.videoModel.tags %}
-            <span class="label label-info"><a href="">{{ t.tag }}</a></span>
+            <span class="label label-info"><a href="{{path('videos_bytag', {'id':t.id,'slug':t.tag})}}">{{ t.tag }}</a></span>
         {% endfor %}
 
         <p><br /></p>

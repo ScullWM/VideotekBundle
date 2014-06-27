@@ -14,7 +14,7 @@
                       <li><a data-service="v">Vimeo</a></li>
                     </ul>
                 </div>
-                <input type="hidden" name="hostservice" value="y" id="search_param">         
+                <input type="text" name="hostservice" value="y" id="search_param">         
                 <input type="text" class="form-control" name="keyword" placeholder="Search term...">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -32,7 +32,7 @@
 {% for item in result %}
 <div class="row">
     <div class="col-md-4">
-        <img src="{{item.img}}" />
+        <img src="{{item.img}}" style="max-width:100%" />
     </div>
     <div class="col-md-8">
         <h4>{{item.title}}</h4>
