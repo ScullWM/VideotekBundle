@@ -105,8 +105,6 @@ class AdminController extends Controller
         $em->persist($video);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('success', 'Video saved !');
-
         return $this->redirect($this->generateUrl('video_admin_search'));
     }
 

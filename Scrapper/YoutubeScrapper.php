@@ -38,7 +38,7 @@ class YoutubeScrapper extends ModelScrapper implements VideoScrapperInterface
         $formatedObject->title = $data->snippet->title;
         $formatedObject->description = $data->snippet->description;
         $formatedObject->url = 'https://www.youtube.com/watch?v='.$videoId;
-        $formatedObject->img = $data->snippet->thumbnails->default->url;
+        $formatedObject->img = $data->snippet->thumbnails->medium->url;
         $formatedObject->service = 'y';
         $formatedObject->videoid = $videoId;
 
