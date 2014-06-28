@@ -10,7 +10,7 @@ class DailymotionScrapper extends ModelScrapper implements VideoScrapperInterfac
 {
     private $dailmotionKey;
     private $searchUrl = 'https://api.dailymotion.com/videos?search=keyword&fields=id,title,description,embed_url,thumbnail_480_url';
-    private $videoidUrl = 'https://api.dailymotion.com/video/videoid?search=keyword&fields=id,title,description,embed_url,thumbnail_480_url';
+    private $videoidUrl = 'https://api.dailymotion.com/video/videoid?fields=id,title,description,embed_url,thumbnail_480_url';
 
     public function __construct($key)
     {
