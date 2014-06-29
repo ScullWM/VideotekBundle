@@ -3,9 +3,6 @@
 namespace Swm\VideotekBundle\Controller;
 
 use Swm\VideotekBundle\Entity\Video;
-use Swm\VideotekBundle\Form\VideoType;
-use Swm\VideotekBundle\Form\Handler\VideoHandler;
-use Symfony\Component\HttpFoundation\Request;
 use Swm\VideotekBundle\Model\SearchQueryModel;
 use Swm\VideotekBundle\Scrapper\VideoScrapper;
 use Swm\VideotekBundle\Model\VideoFromApiRepository;
@@ -144,7 +141,7 @@ class AdminController extends Controller
 
     /**
      * Hummm... Haaaa... WTF are you doing here?
-     * @param  [type] $service [description]
+     * @param  string $service [description]
      * @return [type]          [description]
      */
     private function getScrapper($service)

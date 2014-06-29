@@ -15,6 +15,9 @@ class GuzzleAdapter implements HttpAdapterInterface
         return new \SplFileInfo($path);
     }
 
+    /**
+     * @param string $url
+     */
     public function getJson($url)
     {
         $client = new Client();
