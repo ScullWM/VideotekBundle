@@ -40,6 +40,24 @@ class AdminController extends Controller
     }
 
     /**
+     * test action with it
+     * 
+     * @Route("/waiting", name="video_admin_waiting")
+     * @Method("GET")
+     * @Template("SwmVideotekBundle:Admin:index.html.twig")
+     */
+    public function waitingAction()
+    {
+        $em = $this->get('doctrine')->getManager();
+        $videos = $em->getRepository("SwmVideotekBundle:Video")->getWaiting(100);
+
+        $videoservice  = $this->get('swm_videotek.videoservice');
+        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
+
+        return array('videos' => $videoExtended);
+    }
+
+    /**
      * 
      * @Route("/import", name="video_admin_import")
      * @Method("GET")

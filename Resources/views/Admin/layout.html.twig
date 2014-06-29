@@ -4,6 +4,7 @@
     <div class="col-md-12">
         <ul class="nav nav-tabs">
             <li class="{% if app.request.attributes.get('_route') == 'video_admin_home' %}active{% endif %}"><a href="{{ path('video_admin_home') }}">Home</a></li>
+            <li class="{% if app.request.attributes.get('_route') == 'video_admin_waiting' %}active{% endif %}"><a href="{{ path('video_admin_waiting') }}">Waiting</a></li>
             <li class="{% if app.request.attributes.get('_route') == 'video_admin_search' %}active{% endif %}"><a href="{{ path('video_admin_search') }}">Search</a></li>
             <li class="{% if app.request.attributes.get('_route') == 'video_admin_import' %}active{% endif %}"><a href="{{ path('video_admin_import') }}">Import</a></li>
         </ul>
