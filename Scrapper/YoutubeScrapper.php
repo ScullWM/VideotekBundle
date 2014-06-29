@@ -30,6 +30,9 @@ class YoutubeScrapper extends ModelScrapper implements VideoScrapperInterface
         return $this->formatResult($video);
     }
 
+    /**
+     * @param \stdClass $data
+     */
     protected function formatResult($data)
     {
         $videoId = (isset($data->id) && is_string($data->id))?$data->id:$data->id->videoId;

@@ -237,7 +237,7 @@ class Video
     /**
      * Add tags
      *
-     * @param Swm\VideotekBundle\Entity\Tag $tags
+     * @param Tag $tags
      */
     public function addTag(\Swm\VideotekBundle\Entity\Tag $tags)
     {
@@ -247,7 +247,7 @@ class Video
     /**
      * Get tags
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\ArrayCollection 
      */
     public function getTags()
     {
@@ -257,7 +257,7 @@ class Video
     /**
      * Get tags
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\ArrayCollection 
      */
     public function getTag()
     {
