@@ -5,6 +5,9 @@ namespace Swm\VideotekBundle\Controller;
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Form\VideoType;
 use Swm\VideotekBundle\Form\Handler\VideoHandler;
+use Swm\VideotekBundle\Event\VideoEvent;
+use Swm\VideotekBundle\EventListener\VideoListener;
+use Swm\VideotekBundle\SwmVideotekEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -102,7 +105,7 @@ class MainController extends Controller
         $moreVideos = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
         $em->persist($video);
         $em->flush();
-
+ 
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
     }
 
@@ -123,6 +126,9 @@ class MainController extends Controller
 
         if ($process) {
             $this->get('session')->getFlashBag()->add('notice', 'Thanks');
+
+            $event = new VideoEvent($entity);
+            $this->get('event_dispatcher')->dispatch(SwmVideotekEvents::VIDEO_NEW, $event);
         }
 
         return array('form'=>$form->createView());

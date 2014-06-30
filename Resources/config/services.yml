@@ -23,4 +23,4 @@ services:
         class: Swm\VideotekBundle\EventListener\VideoListener
         arguments: [@swm_videotek.distanthostingservice]
         tags:
-            - { name: doctrine.event_listener, event: postPersist }
+            - { name: kernel.event_listener, event: videotek.video.new, method:getThumb }

@@ -2,8 +2,8 @@
 
 namespace Swm\VideotekBundle\EventListener;
 
-use Swm\VideotekBundle\Entity\Video;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Swm\VideotekBundle\Event\VideoEvent;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class VideoListener implements EventSubscriberInterface
@@ -15,18 +15,12 @@ class VideoListener implements EventSubscriberInterface
         $this->distanthostingservice = $distanthostingservice;
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function getThumb(VideoEvent $videoEvent)
     {
-        $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
-
-
-        if ($entity instanceof Video)
-        {
-            $entity->setfav(true);
-            $entity->sethits($entity->getid());
-            $entityManager->persist($entity);
-        }
+        echo'<pre>';
+        print_r($videoEvent);
+        echo'</pre>';
+        exit();
     }
 
     static public function getSubscribedEvents()
