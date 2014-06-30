@@ -19,3 +19,8 @@ services:
         class: Swm\VideotekBundle\ParamConverter\SearchQueryConverter
         tags:
             - { name: request.param_converter, converter: search_query }
+    swm_videotek.listener.videonew:
+        class: Swm\VideotekBundle\EventListener\VideoListener
+        arguments: [@swm_videotek.distanthostingservice]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
