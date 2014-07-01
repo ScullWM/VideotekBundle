@@ -22,11 +22,11 @@ class VideoHandler
 
     public function process(Video $video)
     {
-        if("POST" != $this->request->getMethod()) return false;
+        if("POST" != $this->request->getMethod()) return;
         
         $this->form->handleRequest($this->request);
 
-        if(!$this->form->isValid()) return false;
+        if(!$this->form->isValid()) return;
 
         $video->setHits(0);
         $video->setFav(false);

@@ -7,6 +7,7 @@ use Swm\VideotekBundle\Model\SearchQueryModel;
 use Swm\VideotekBundle\Scrapper\VideoScrapper;
 use Swm\VideotekBundle\Model\VideoFromApiRepository;
 use Swm\VideotekBundle\Form\VideoAdminType;
+use Swm\VideotekBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -93,11 +94,12 @@ class AdminController extends Controller
 
             $result   = $scrapper->search($searchQuery->keyword);
         }
+        $form   = $this->createForm(new SearchType());
 
         $em   = $this->get('doctrine')->getManager();
         $tags = $em->getRepository("SwmVideotekBundle:Tag")->getAll();
 
-        return array('result'=>$result, 'tags'=>$tags);
+        return array('result'=>$result, 'tags'=>$tags, 'form'=>$form->createView());
     }
 
     /**
