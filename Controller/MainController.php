@@ -105,6 +105,9 @@ class MainController extends Controller
         $moreVideos = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
         $em->persist($video);
         $em->flush();
+
+        $msg = array('user_id' => 1235, 'image_path' => '/path/to/new/pic.png');
+        $this->get('old_sound_rabbit_mq.download_thumb_producer')->publish(serialize($msg));
  
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
     }
