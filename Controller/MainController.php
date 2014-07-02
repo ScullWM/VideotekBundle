@@ -106,7 +106,7 @@ class MainController extends Controller
         $em->persist($video);
         $em->flush();
 
-        $msg = array('user_id' => 1235, 'image_path' => '/path/to/new/pic.png');
+        $msg = array('id' => $videoExtended->id, 'image_path' => $videoExtended->img_big);
         $this->get('old_sound_rabbit_mq.download_thumb_producer')->publish(serialize($msg));
  
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
