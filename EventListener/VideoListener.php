@@ -18,7 +18,9 @@ class VideoListener implements EventSubscriberInterface
     public function getThumb(VideoEvent $videoEvent)
     {
         $video = $videoEvent->getVideo();
-        $this->distantHostingService->process($video);
+
+        $msg = array('id' => $video->id, 'image_path' => $video->img_big);
+        $this->get('old_sound_rabbit_mq.download_thumb_producer')->publish(serialize($msg));
     }
 
     static public function getSubscribedEvents()
