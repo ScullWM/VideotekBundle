@@ -21,6 +21,6 @@ services:
             - { name: request.param_converter, converter: search_query }
     swm_videotek.listener.videonew:
         class: Swm\VideotekBundle\EventListener\VideoListener
-        arguments: [@swm_videotek.distanthostingservice]
+        arguments: [@swm_videotek.videoservice]
         tags:
             - { name: kernel.event_listener, event: videotek.video.new, method:getThumb }

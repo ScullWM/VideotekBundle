@@ -8,18 +8,19 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class VideoListener implements EventSubscriberInterface
 {
-    private $distantHostingService;
+    private $videoService;
 
-    public function __construct($distantHostingService)
+    public function __construct($videoService)
     {
-        $this->distantHostingService = $distantHostingService;
+        $this->videoService = $videoService;
     }
 
     public function getThumb(VideoEvent $videoEvent)
     {
         $video = $videoEvent->getVideo();
+        $videoExtended = $this->videoService->getInfoFromVideo($video);
 
-        $msg = array('id' => $video->id, 'image_path' => $video->img_big);
+        $msg = array('id' => $videoExtended->id, 'image_path' => $videoExtended->img_big);
         $this->get('old_sound_rabbit_mq.download_thumb_producer')->publish(serialize($msg));
     }
 
