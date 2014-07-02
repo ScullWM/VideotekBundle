@@ -9,13 +9,16 @@
                         <span id="search_concept">Service hosting</span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a data-service="y">Youtube</a></li>
-                      <li><a data-service="d">Dailymotion</a></li>
-                      <li><a data-service="v">Vimeo</a></li>
+                        <li><a data-service="y">Youtube</a></li>
+                        <li><a data-service="d">Dailymotion</a></li>
+                        <li><a data-service="v">Vimeo</a></li>
                     </ul>
                 </div>
                 <input type="hidden" name="hostservice" value="y" id="search_param">         
-                <input type="text" class="form-control" name="keyword" placeholder="Search term...">
+                {{ form_widget(form.hostservice, { 'id': 'search_param' }) }}
+                {{ form_widget(form.keyword) }}
+                {{ form_widget(form._token) }}
+
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 </span>

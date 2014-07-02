@@ -8,19 +8,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class VideoListener implements EventSubscriberInterface
 {
-    private $distanthostingservice;
+    private $distantHostingService;
 
-    public function __construct($distanthostingservice)
+    public function __construct($distantHostingService)
     {
-        $this->distanthostingservice = $distanthostingservice;
+        $this->distantHostingService = $distantHostingService;
     }
 
     public function getThumb(VideoEvent $videoEvent)
     {
-        echo'<pre>';
-        print_r($videoEvent);
-        echo'</pre>';
-        exit();
+        $video = $videoEvent->getVideo();
+        $this->distantHostingService->process($video);
     }
 
     static public function getSubscribedEvents()
