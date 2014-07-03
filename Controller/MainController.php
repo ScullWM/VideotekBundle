@@ -133,4 +133,27 @@ class MainController extends Controller
 
         return array('form'=>$form->createView());
     }
+
+    /**
+     * Search action
+     *
+     * @Route("/search", name="video_search")
+     * @Method("POST")
+     * @Template("SwmVideotekBundle:Main:index.html.twig")
+     */
+    public function searchAction(Request $request)
+    {
+        $term = $request->get('q');
+
+        $repositoryManager = $this->get('fos_elastica.manager.orm');
+        $repository = $repositoryManager->getRepository('SwmVideotekBundle:Video');
+        $videos = $repository->find($term);
+
+
+
+        $videoservice  = $this->get('swm_videotek.videoservice');
+        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
+
+        return array('videos'=>$videoExtended);
+    }
 }

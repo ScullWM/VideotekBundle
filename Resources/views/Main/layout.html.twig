@@ -30,6 +30,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ path('video_submit') }}">Submit a video</a></li>
                 </ul>
+                <form class="navbar-form navbar-right" action="{{path('video_search')}}" method="post">
+                    <input type="text" class="form-control" name="q" placeholder="Search...">
+                </form>
             </div><!--/.nav-collapse -->
             </div>
         </div>
