@@ -35,4 +35,21 @@ class DistantHostingService
     {
         return (string) $this->thumbPath.$videoExtended->id.'.jpg';
     }
+
+    public function isExpired($videoExtended)
+    {
+        $actualThumb = $this->getLocalFilename($videoExtended);
+
+        $actualSignature = $this->getFileBasicSignature($actualThumb);
+        
+    }
+
+    
+
+    private function getFileBasicSignature($path)
+    {
+        $signature = md5(file_get_contents($path));
+
+        return (string) $signature;
+    }
 }
