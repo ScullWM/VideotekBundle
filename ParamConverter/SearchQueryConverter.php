@@ -14,6 +14,9 @@ class SearchQueryConverter implements ParamConverterInterface
     {
         $formData = $request->get('swm_videotekbundle_search');
 
+        if(null !== $request->get('keyword')) $formData['keyword'] = $request->get('keyword');
+        if(null !== $request->get('hostservice')) $formData['hostservice'] = $request->get('hostservice');
+
         $searchQuery = new SearchQueryModel($formData['keyword'], $formData['hostservice'], $request->get('videoid'));
         $request->attributes->set($configuration->getName(), $searchQuery);
     }

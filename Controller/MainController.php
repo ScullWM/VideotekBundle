@@ -139,7 +139,7 @@ class MainController extends Controller
      *
      * @Route("/search", name="video_search")
      * @Method("POST")
-     * @Template("SwmVideotekBundle:Main:index.html.twig")
+     * @Template("SwmVideotekBundle:Main:search.html.twig")
      */
     public function searchAction(Request $request)
     {
@@ -149,11 +149,9 @@ class MainController extends Controller
         $repository = $repositoryManager->getRepository('SwmVideotekBundle:Video');
         $videos = $repository->find($term);
 
-
-
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
 
-        return array('videos'=>$videoExtended);
+        return array('videos'=>$videoExtended, 'term'=>$term);
     }
 }

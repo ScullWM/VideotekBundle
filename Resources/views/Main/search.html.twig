@@ -1,0 +1,10 @@
+{% extends "SwmVideotekBundle:Main:layout.html.twig" %}
+{% block body %}
+<hgroup class="mb20">
+    <h2>Search Results</h2>
+    <span class="lead"><strong class="text-danger">{{videos|length}}</strong> results were found for the search for <strong class="text-danger">{{term}}</strong></span>                               
+</hgroup>
+<hr />
+
+{% include 'SwmVideotekBundle:Main:listing.inc.html.twig' %}
+{% endblock %}
