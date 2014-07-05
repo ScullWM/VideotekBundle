@@ -56,27 +56,6 @@ class AdminController extends Controller
     }
 
     /**
-     * 
-     * @Route("/import", name="video_admin_import")
-     * @Method("GET")
-     * @Template("SwmVideotekBundle:Admin:import.html.twig")
-     */
-    public function importAction()
-    {
-        $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->getImport();
-
-        $distantHostingService  = $this->get('swm_videotek.distanthostingservice');
-        $files = array_map(array($distantHostingService, 'process'), $videos);
-
-        $basedir = $this->container->getParameter('swm_videotek.path.thumbnails');
-        $imgs = glob($basedir.'*.jpg');
-        $imgs = array_map(function($d)use($basedir){ return str_replace($basedir,'',$d);}, $imgs);
-
-        return array('files'=>$files, 'videos'=>$videos, 'imgs'=>$imgs);
-    }
-
-    /**
      * @Route("/search", name="video_admin_search")
      * @Method({"GET", "POST"})
      * @ParamConverter(

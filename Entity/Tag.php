@@ -40,7 +40,7 @@ class Tag
      */
     public function __construct()
     {
-        $this->video = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->videos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
