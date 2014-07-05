@@ -38,18 +38,8 @@ class DistantHostingService
 
     public function isExpired($videoExtended)
     {
-        $actualThumb = $this->getLocalFilename($videoExtended);
+        $httpCode = $this->httpClient->getCode($videoExtended->img_big);
 
-        $actualSignature = $this->getFileBasicSignature($actualThumb);
-        
-    }
-
-    
-
-    private function getFileBasicSignature($path)
-    {
-        $signature = md5(file_get_contents($path));
-
-        return (string) $signature;
+        return (bool) (200 !== $httpCode);
     }
 }

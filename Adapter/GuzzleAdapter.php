@@ -26,4 +26,17 @@ class GuzzleAdapter implements HttpAdapterInterface
         return (array) $res->json();
     }
 
+    public function getCode($url)
+    {
+        $client = new Client();
+
+        try {
+            $res = $client->get($url);
+            $code = $res->getStatusCode();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $code = 404;
+        }
+
+        return (int) $code;
+    }
 }
