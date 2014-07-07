@@ -40,7 +40,7 @@
     <div class="col-md-8">
         <h4>{{item.title}}</h4>
         <p>{{item.description}}</p>
-        <a href="{{path('video_admin_doscrapp', {'hostservice':item.service,'videoid':item.videoid})}}" class="btn btn-default">Scrapp</a>
+        <a href="{{path('video_admin_doscrapp', {'hostservice':item.service,'videoid':item.videoid, 'keyword':keyword})}}" class="btn btn-default">Scrapp</a>
     </div>
 </div>
 {% endfor %}

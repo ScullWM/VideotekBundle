@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function indexAction()
     {
         $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->getLast(100);
+        $videos = $em->getRepository("SwmVideotekBundle:Video")->findAll();
 
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
@@ -78,11 +78,11 @@ class AdminController extends Controller
         $em   = $this->get('doctrine')->getManager();
         $tags = $em->getRepository("SwmVideotekBundle:Tag")->getAll();
 
-        return array('result'=>$result, 'tags'=>$tags, 'form'=>$form->createView());
+        return array('result'=>$result, 'tags'=>$tags, 'form'=>$form->createView(), 'keyword'=>$searchQuery->keyword);
     }
 
     /**
-     * @Route("/doscrapp/{hostservice}/{videoid}", name="video_admin_doscrapp")
+     * @Route("/doscrapp/{hostservice}/{videoid}/{keyword}", name="video_admin_doscrapp")
      * @Method({"GET"})
      * @ParamConverter(
      *     name="searchQuery",
@@ -101,7 +101,7 @@ class AdminController extends Controller
         $em->persist($video);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('video_admin_search'));
+        return $this->redirect($this->generateUrl('video_admin_search', array('hostservice'=>$searchQuery->hostService,'keyword'=>$searchQuery->keyword)));
     }
 
     /**
