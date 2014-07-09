@@ -27,7 +27,6 @@ class DailymotionScrapper extends ModelScrapper implements VideoScrapperInterfac
         $formatedResults = array_map(array($this, 'formatResult'), $results['list']);
 
         return (array) $formatedResults;
-
     }
 
     public function seeResult($id)
@@ -46,12 +45,12 @@ class DailymotionScrapper extends ModelScrapper implements VideoScrapperInterfac
         $videoId = $data['id'];
 
         $formatedObject = new VideoFromApiModel();
-        $formatedObject->title = $data['title'];
-        $formatedObject->description = $data['description'];
-        $formatedObject->url = $data['embed_url'];
-        $formatedObject->img = $data['thumbnail_480_url'];
-        $formatedObject->service = 'd';
-        $formatedObject->videoid = $videoId;
+        $formatedObject->setTitle($data['title']);
+        $formatedObject->setDescription($data['description']);
+        $formatedObject->setUrl($data['embed_url']);
+        $formatedObject->setImg($data['thumbnail_480_url']);
+        $formatedObject->setService('d');
+        $formatedObject->setVideoid($videoId);
 
         return $formatedObject;
     }
