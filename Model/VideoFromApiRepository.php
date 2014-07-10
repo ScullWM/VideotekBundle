@@ -9,9 +9,9 @@ class VideoFromApiRepository
     public function convertToEntity($data)
     {
         $video = new Video();
-        $video->setTitle($data->title);
-        $video->setUrl($data->url);
-        $video->setDescription($data->description);
+        $video->setTitle($data->getTitle());
+        $video->setUrl($data->getUrl());
+        $video->setDescription($data->getDescription());
         $video->setHits(0);
         $video->setFav(true);
         $video->setStatut(true);
