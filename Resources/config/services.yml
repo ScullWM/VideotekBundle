@@ -24,3 +24,7 @@ services:
         arguments: [@swm_videotek.videoservice]
         tags:
             - { name: kernel.event_listener, event: videotek.video.new, method:getThumb }
+
+    swm_videotek.video.expired:
+        class: Swm\VideotekBundle\Service\ExpiredVideoManager
+        arguments: ['@doctrine.orm.entity_manager','@swm_videotek.distanthostingservice','@swm_videotek.videoservice']
