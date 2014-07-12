@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Swm\VideotekBundle\Entity\Video;
+use Symfony\Component\Console\Helper\ProgressHelper;
 
 class ExpiredCommand extends ContainerAwareCommand
 {
@@ -21,10 +22,9 @@ class ExpiredCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getContainer();
+        $progress = $this->getHelperSet()->get('progress');
 
-        $serviceExpired = $container->get('swm_videotek.video.expired');
-
-        $serviceExpired->process($input, $output);
+        $serviceExpired = $this->getContainer()->get('swm_videotek.video.expired');
+        $serviceExpired->process($input, $output, $progress);
     }
 }

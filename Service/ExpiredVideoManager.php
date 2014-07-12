@@ -21,18 +21,25 @@ class ExpiredVideoManager
         $this->videoService = $videoService;
     }
 
-    public function process(InputInterface $input, OutputInterface $output)
+    public function process(InputInterface $input, OutputInterface $output, $progress)
     {
         $videos = $this->doctrine->getRepository("SwmVideotekBundle:Video")->findAll();
 
-        $outputVideo = array_map(array($this, 'checkVideo'), $videos);
-        $outputVideo = array_filter($outputVideo);
+        $progress->start($output, count($videos));
 
-        foreach ($outputVideo as $msg) {
+        $outputMsg = array();
+        foreach ($videos as $video) {
+            $progress->advance();
+            $outputMsg[] = $this->checkVideo($video);
+        }
+        $progress->finish();
+
+        foreach (array_filter($outputMsg) as $msg) {
             $output->writeln($msg);
         }
+
         $output->writeln('-----------------');
-        $output->writeln('Work Done: '.count($outputVideo).' video(s)');
+        $output->writeln('Work Done: '.count($outputMsg).' video(s)');
     }
 
     private function checkVideo(Video $video)
