@@ -98,6 +98,8 @@ class Video
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
@@ -118,6 +120,8 @@ class Video
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -138,6 +142,8 @@ class Video
     public function setHits($hits)
     {
         $this->hits = $hits;
+
+        return $this;
     }
 
     /**
@@ -162,6 +168,8 @@ class Video
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -182,6 +190,8 @@ class Video
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -202,6 +212,8 @@ class Video
     public function setFav($fav)
     {
         $this->fav = $fav;
+
+        return $this;
     }
 
     /**
@@ -222,6 +234,8 @@ class Video
     public function setStatut($statut)
     {
         $this->statut = $statut;
+
+        return $this;
     }
 
     /**
