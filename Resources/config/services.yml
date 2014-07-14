@@ -28,3 +28,7 @@ services:
     swm_videotek.video.expired:
         class: Swm\VideotekBundle\Service\ExpiredVideoManager
         arguments: ['@doctrine.orm.entity_manager','@swm_videotek.distanthostingservice','@swm_videotek.videoservice']
+
+    swm_videotek.tag.matcher:
+        class: Swm\VideotekBundle\Service\TagMatcherService
+        arguments: ['@doctrine.orm.entity_manager']
