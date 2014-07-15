@@ -16,7 +16,6 @@ class TagType extends AbstractType
     {
         $builder
             ->add('tag')
-            ->add('video')
         ;
     }
     

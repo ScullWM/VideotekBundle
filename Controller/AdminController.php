@@ -3,11 +3,13 @@
 namespace Swm\VideotekBundle\Controller;
 
 use Swm\VideotekBundle\Entity\Video;
+use Swm\VideotekBundle\Entity\Tag;
 use Swm\VideotekBundle\Model\SearchQueryModel;
 use Swm\VideotekBundle\Scrapper\VideoScrapper;
 use Swm\VideotekBundle\Model\VideoFromApiRepository;
 use Swm\VideotekBundle\Form\VideoAdminType;
 use Swm\VideotekBundle\Form\SearchType;
+use Swm\VideotekBundle\Form\TagType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -102,6 +104,23 @@ class AdminController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('video_admin_search', array('hostservice'=>$searchQuery->hostService,'keyword'=>$searchQuery->keyword)));
+    }
+
+    /**
+     * @Route("/tag", name="video_admin_tag")
+     * @Method({"GET"})
+     * @Template("SwmVideotekBundle:Admin:tag.html.twig")
+     */
+    public function tagAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tags = $em->getRepository("SwmVideotekBundle:Tag")->findAll();
+
+        $form = $this->createForm(new TagType(), new Tag());
+        $tagHandler = new TagHandler($form, $request, $this->getDoctrine());
+        $process = $tagHandler->process();
+
+        return array('tags'=>$tags, 'form'=>$form->createView());
     }
 
     /**

@@ -1,0 +1,17 @@
+{% extends "SwmVideotekBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <form action="{{ path('video_admin_tag')}}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-success" />
+        </form>
+    </div>
+    <div class="col-md-9">
+        {% for t in tags %}
+            <span class="label label-info"><a href="{{path('video_admin_search', {hostservice:'y',keyword:t.tag})}}">{{ t.tag }}</a></span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
