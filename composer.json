@@ -1,5 +1,5 @@
 {
-	"name": "scullwm/videotekbsundle",
+	"name": "scullwm/videotekbundle",
 	"description": "Bundle video",
     "require": {
         "stof/doctrine-extensions-bundle": "1.1.*@dev",
