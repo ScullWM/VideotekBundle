@@ -253,9 +253,10 @@ class Video
      *
      * @param Tag $tags
      */
-    public function addTag(\Swm\VideotekBundle\Entity\Tag $tags)
+    public function addTag(Tag $tag)
     {
-        $this->tags[] = $tags;
+        if($this->tags->contains($tag)) return;
+        $this->tags[] = $tag;
     }
 
     /**
@@ -281,6 +282,7 @@ class Video
     public function setTags($tags)
     {
         foreach ($tags as $tag) {
+            if($this->tags->contains($tag)) continue;
             $this->addTag($tag);
         }
         return $this;
