@@ -15,6 +15,13 @@ class VideoScrapper
     private $dailymotionKey = null;
     private $vimeoKey = null;
 
+    public function __construct($youtubeKey, $dailymotionKey, $vimeoKey)
+    {
+        $this->youtubeKey = $youtubeKey;
+        $this->dailymotionKey = $dailymotionKey;
+        $this->vimeoKey = $vimeoKey;
+    }
+
     public function setScrapperService($service)
     {
         switch ($service) {

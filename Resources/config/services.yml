@@ -12,9 +12,11 @@ services:
         arguments: [@swm_videotek.videoservice, %swm_videotek.path.thumbnails%, @swm_videotek.http.adapter]
     swm_videotek.http.adapter:
         class: Swm\VideotekBundle\Adapter\GuzzleAdapter
+
     swm_videotek.videoscrapper:
         class: Swm\VideotekBundle\Scrapper\VideoScrapper
-        arguments: [@request_stack]
+        arguments: [%swm_videotek.keys.youtubekey%, %swm_videotek.keys.dailymotionkey%, %swm_videotek.keys.vimeokey%]
+
     swm_videotek.param_converter.search_query:
         class: Swm\VideotekBundle\ParamConverter\SearchQueryConverter
         tags:
@@ -31,7 +33,23 @@ services:
 
     swm_videotek.tag.matcher:
         class: Swm\VideotekBundle\Service\TagMatcherService
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager','@swm_videotek.tag.aliasgenerator']
 
     swm_videotek.form.tag:
         class: Swm\VideotekBundle\Form\TagType
+
+    swm_videotek.tag.aliasgenerator:
+        class: Swm\VideotekBundle\Service\TagAliasGenerator
+
+    swm_videotek.tag.transform:
+        class: Swm\VideotekBundle\Service\TagTransform
+
+    swm_videotek.tag.multisaver:
+        class: Swm\VideotekBundle\Service\TagManager\MultiTagSaver
+        arguments:
+            ['@doctrine.orm.entity_manager']
+
+    swm_videotek.cmd.populate:
+        class: Swm\VideotekBundle\Service\PopulateService
+        arguments:
+            ['@doctrine.orm.entity_manager']

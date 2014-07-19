@@ -5,17 +5,23 @@ namespace Swm\VideotekBundle\Service;
 use Swm\VideotekBundle\Entity\Video;
 use Swm\VideotekBundle\Entity\Tag;
 use Swm\VideotekBundle\Exception;
+use Swm\VideotekBundle\Model\TagAliasModel;
 
 class TagMatcherService
 {
     private $entityManager;
     private $video;
     private $tags = array();
+    private $tagAliasGenerator;
+    private $matchedTag = 0;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $tagAliasGenerator)
     {
         $this->entityManager = $entityManager;
-        $this->tags = $this->entityManager->getRepository("SwmVideotekBundle:Tag")->findAll();
+        $this->tagAliasGenerator = $tagAliasGenerator;
+        $tags = $this->entityManager->getRepository("SwmVideotekBundle:Tag")->findAll();
+
+        $this->tags = $this->tagAliasGenerator->process($tags);
     }
     
     public function process()
@@ -28,12 +34,20 @@ class TagMatcherService
         $this->entityManager->flush();
     }
 
-
-    private function matchTag(Tag $tag)
+    public function getPertinence()
     {
-        if(strstr($this->video->getDescription(), $tag->getTag()))
+        $this->matchedTag = 0;
+        array_map(array($this, 'matchTag'), $this->tags);
+
+        return $this->matchedTag;
+    }
+
+    private function matchTag(TagAliasModel $tag)
+    {
+        if(strstr($this->video->getDescription(), $tag->getTag()) || strstr($this->video->getTitle(), $tag->getTag()))
         {
-            $this->video->addTag($tag);
+            //$this->video->addTag($tag->getOriginalTag());
+            $this->matchedTag++;
         }
         return;
     }
@@ -45,7 +59,7 @@ class TagMatcherService
      *
      * @return self
      */
-    public function setVideo(Video $video)
+    public function setVideo($video)
     {
         $this->video = $video;
 

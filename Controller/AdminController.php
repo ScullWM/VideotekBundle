@@ -10,6 +10,8 @@ use Swm\VideotekBundle\Model\VideoFromApiRepository;
 use Swm\VideotekBundle\Form\VideoAdminType;
 use Swm\VideotekBundle\Form\SearchType;
 use Swm\VideotekBundle\Form\TagType;
+use Swm\VideotekBundle\Form\Handler\TagHandler;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -108,17 +110,25 @@ class AdminController extends Controller
 
     /**
      * @Route("/tag", name="video_admin_tag")
-     * @Method({"GET"})
+     * @Method({"GET","POST"})
      * @Template("SwmVideotekBundle:Admin:tag.html.twig")
      */
-    public function tagAction()
+    public function tagAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $tags = $em->getRepository("SwmVideotekBundle:Tag")->findAll();
 
-        $form = $this->createForm(new TagType(), new Tag());
+        $entity = new Tag();
+        $form = $this->createForm(new TagType(), $entity);
         $tagHandler = new TagHandler($form, $request, $this->getDoctrine());
-        $process = $tagHandler->process();
+        $process = $tagHandler->process($entity);
+
+        if(null !== $request->get('txtform'))
+        {
+            $txt = $request->get('txtform');
+            $newTags = $this->get('swm_videotek.tag.transform')->process($txt);
+            $this->get('swm_videotek.tag.multisaver')->process($newTags);
+        }
 
         return array('tags'=>$tags, 'form'=>$form->createView());
     }
@@ -146,10 +156,7 @@ class AdminController extends Controller
      */
     private function getScrapper($service)
     {
-        $scrapper = new VideoScrapper();
-        $scrapper->setYoutubeKey($this->container->getParameter('swm_videotek.keys.youtubekey'));
-        $scrapper->setDailymotionKey($this->container->getParameter('swm_videotek.keys.dailymotionkey'));
-        $scrapper->setVimeoKey($this->container->getParameter('swm_videotek.keys.vimeokey'));
+        $scrapper = $this->get('swm_videotek.videoscrapper');
         $scrapper->setScrapperService($service);
 
         return $scrapper;
