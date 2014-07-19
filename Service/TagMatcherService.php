@@ -39,7 +39,7 @@ class TagMatcherService
         $this->matchedTag = 0;
         array_map(array($this, 'matchTag'), $this->tags);
 
-        return $this->matchedTag;
+        return (int) $this->matchedTag;
     }
 
     private function matchTag(TagAliasModel $tag)
