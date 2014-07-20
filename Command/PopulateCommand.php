@@ -44,7 +44,7 @@ class PopulateCommand extends ContainerAwareCommand
         $em    = $this->getContainer()->get('doctrine')->getManager();
         foreach ($videos as $video) {
             $basicPertinence = $tagMatcherService->setVideo($video)->getPertinence();
-            if(0 != $basicPertinence && $this->populateService->isNew($video)) {
+            if(0 != $basicPertinence && $populateService->isNew($video)) {
                 $videoDetail = $videoScrapper->seeResult($video->getVideoid());
                 $pertinence  = $tagMatcherService->setVideo($videoDetail)->getPertinence();
 
