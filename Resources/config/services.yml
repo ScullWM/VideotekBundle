@@ -44,6 +44,9 @@ services:
     swm_videotek.tag.transform:
         class: Swm\VideotekBundle\Service\TagTransform
 
+    swm_videotek.video.api.converter:
+        class: Swm\VideotekBundle\Model\VideoFromApiRepository
+
     swm_videotek.tag.multisaver:
         class: Swm\VideotekBundle\Service\TagManager\MultiTagSaver
         arguments:

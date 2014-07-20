@@ -28,8 +28,8 @@ class PopulateCommand extends ContainerAwareCommand
     {
         $progress = $this->getHelperSet()->get('progress');
 
-        $populateExpired = $this->getContainer()->get('swm_videotek.cmd.populate');
-        $tag = $populateExpired->getRandomTag();
+        $populateService = $this->getContainer()->get('swm_videotek.cmd.populate');
+        $tag = $populateService->getRandomTag();
 
         $output->writeln('Random tag: '.$tag.'');
         $output->writeln('-----------------');
@@ -39,17 +39,17 @@ class PopulateCommand extends ContainerAwareCommand
         $videos = $videoScrapper->search($tag->getTag());
 
         $tagMatcherService = $this->getContainer()->get('swm_videotek.tag.matcher');
+        $VideoApiService = $this->getContainer()->get('swm_videotek.video.api.converter');
 
         $em    = $this->getContainer()->get('doctrine')->getManager();
         foreach ($videos as $video) {
             $basicPertinence = $tagMatcherService->setVideo($video)->getPertinence();
-            if(0 != $basicPertinence) {
+            if(0 != $basicPertinence && $this->populateService->isNew($video)) {
                 $videoDetail = $videoScrapper->seeResult($video->getVideoid());
                 $pertinence  = $tagMatcherService->setVideo($videoDetail)->getPertinence();
 
                 if($this->minPertinence <= $pertinence)
                 {
-                    $VideoApiService = new VideoFromApiRepository();
                     $video = $VideoApiService->convertToEntity($videoDetail);
 
                     $em->persist($video);

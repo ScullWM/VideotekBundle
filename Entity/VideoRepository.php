@@ -40,4 +40,9 @@ class VideoRepository extends EntityRepository
     {
         return $this->createQueryBuilder('v')->where('v.statut = 1')->setMaxResults(2)->getQuery()->getResult();
     }
+
+    public function getByUrl($url)
+    {
+        return $this->createQueryBuilder('v')->where('v.url = :url')->setParameter('url', $url)->getQuery()->getResult();
+    }
 }

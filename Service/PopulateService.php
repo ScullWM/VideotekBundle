@@ -19,4 +19,17 @@ class PopulateService
 
         return $tag;
     }
+
+    public function checkVideos(array $videos)
+    {
+
+    }
+
+    public function isNew($video)
+    {
+        $url = $video->getUrl();
+        $result = $this->em->getRepository('SwmVideotekBundle:Video')->getByUrl($url);
+
+        return $result;
+    }
 }
