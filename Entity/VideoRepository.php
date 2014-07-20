@@ -45,4 +45,11 @@ class VideoRepository extends EntityRepository
     {
         return $this->createQueryBuilder('v')->where('v.url = :url')->setParameter('url', $url)->getQuery()->getResult();
     }
+
+    public function getDoublon($url)
+    {
+        $videos = $this->getByUrl($url);
+
+        return (int) count($videos);
+    }
 }
