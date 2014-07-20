@@ -13,7 +13,7 @@ use Swm\VideotekBundle\Model\VideoFromApiRepository;
 
 class PopulateCommand extends ContainerAwareCommand
 {
-    private $minPertinence = 35;
+    private $minPertinence = 30;
     private $totalVideoAdded = 0;
 
     protected function configure()
@@ -36,7 +36,7 @@ class PopulateCommand extends ContainerAwareCommand
 
         $videoScrapper = $this->getContainer()->get('swm_videotek.videoscrapper');
         $videoScrapper->setScrapperService('y');
-        $videos = $videoScrapper->search($tag->getTag());
+        $videos = $videoScrapper->search('aircraft '.$tag->getTag());
 
         $tagMatcherService = $this->getContainer()->get('swm_videotek.tag.matcher');
         $VideoApiService = $this->getContainer()->get('swm_videotek.video.api.converter');
@@ -59,6 +59,8 @@ class PopulateCommand extends ContainerAwareCommand
                     $output->writeln('New video! <fg=green>'.$video->getTitle().'</fg=green>');
                     $output->writeln('Pertinence: '.$basicPertinence.'=><fg=green>'.$pertinence.'</fg=green>');
                 }
+            }else {
+                $output->writeln('Video: '.$basicPertinence);
             }
 
         }
