@@ -13,7 +13,7 @@ use Swm\VideotekBundle\Model\VideoFromApiRepository;
 
 class PopulateCommand extends ContainerAwareCommand
 {
-    private $minPertinence = 30;
+    private $minPertinence = 25;
     private $totalVideoAdded = 0;
 
     protected function configure()
