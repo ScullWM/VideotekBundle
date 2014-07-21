@@ -36,7 +36,7 @@ class PopulateCommand extends ContainerAwareCommand
 
         $videoScrapper = $this->getContainer()->get('swm_videotek.videoscrapper');
         $videoScrapper->setScrapperService('y');
-        $videos = $videoScrapper->search('aircraft '.$tag->getTag());
+        $videos = $videoScrapper->search('aircraft '.$tag->getTag(), 100, 'date');
 
         $tagMatcherService = $this->getContainer()->get('swm_videotek.tag.matcher');
         $VideoApiService = $this->getContainer()->get('swm_videotek.video.api.converter');

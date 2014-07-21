@@ -28,8 +28,8 @@ class PopulateService
     public function isNew($video)
     {
         $url = $video->getUrl();
-        $result = $this->em->getRepository('SwmVideotekBundle:Video')->getByUrl($url);
+        $result = $this->em->getRepository('SwmVideotekBundle:Video')->getDoublon($url);
 
-        return $result;
+        return (0 === $result);
     }
 }

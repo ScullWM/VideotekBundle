@@ -15,9 +15,9 @@ class YoutubeScrapper extends ModelScrapper implements VideoScrapperInterface
         $this->youtube = new Youtube(array('key' => $key));
     }
 
-    public function search($term, $limit = 50)
+    public function search($term, $limit = 50, $order = null)
     {
-        $results = $this->youtube->searchVideos($term, $limit);
+        $results = $this->youtube->searchVideos($term, $limit, $order);
         $formatedResults = array_map(array($this, 'formatResult'), $results);
 
         return (array) $formatedResults;
