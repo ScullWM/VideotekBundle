@@ -1,4 +1,12 @@
 {% extends "SwmVideotekBundle:Main:layout.html.twig" %}
 {% block body %}
     {% include 'SwmVideotekBundle:Main:listing.inc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</div>
 {% endblock %}

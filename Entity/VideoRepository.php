@@ -8,7 +8,7 @@ class VideoRepository extends EntityRepository
 {
     public function getLast($limit = 12)
     {
-        return $this->createQueryBuilder('v')->setMaxResults($limit)->where('v.statut = 1')->orderBy('v.id', 'DESC')->getQuery()->getResult();
+        return $this->createQueryBuilder('v')->setMaxResults($limit)->where('v.statut = 1')->orderBy('v.id', 'DESC');
     }
 
     public function getWaiting($limit = 12)

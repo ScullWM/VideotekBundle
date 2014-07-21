@@ -20,18 +20,26 @@ class MainController extends Controller
      * test action with it
      * 
      * @Route("/", name="video_home")
+     * @Route("/videos/{page}", name="video_list_page")
      * @Method("GET")
      * @Template("SwmVideotekBundle:Main:index.html.twig")
      */
     public function homepageAction()
     {
         $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->getLast();
+        $query = $em->getRepository("SwmVideotekBundle:Video")->getLast();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1),
+            16
+        );
 
         $videoservice  = $this->get('swm_videotek.videoservice');
-        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
+        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $pagination->getItems());
 
-        return array('videos' => $videoExtended);
+        return array('videos' => $videoExtended, 'pagination' => $pagination);
     }
 
     /**
