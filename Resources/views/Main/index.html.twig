@@ -2,6 +2,7 @@
 {% block body %}
     {% include 'SwmVideotekBundle:Main:listing.inc.html.twig' %}
 
+{% if pagination is defined %}
 <div class="row">
     <div class="col-md-12 text-center">
         <div class="navigation">
@@ -9,4 +10,5 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}

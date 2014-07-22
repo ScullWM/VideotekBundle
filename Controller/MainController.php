@@ -13,12 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class MainController extends Controller
 {
     /**
      * test action with it
-     * 
+     *
      * @Route("/", name="video_home")
      * @Route("/videos/{page}", name="video_list_page")
      * @Method("GET")
@@ -43,7 +44,7 @@ class MainController extends Controller
     }
 
     /**
-     * Top video 
+     * Top video
      *
      * @Route("/top", name="video_top")
      * @Method("GET")
@@ -61,7 +62,7 @@ class MainController extends Controller
     }
 
     /**
-     * Fav video 
+     * Fav video
      *
      * @Route("/fav", name="video_fav")
      * @Method("GET")
@@ -161,5 +162,30 @@ class MainController extends Controller
         $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
 
         return array('videos'=>$videoExtended, 'term'=>$term);
+    }
+
+    /**
+     * Login action
+     *
+     * @Route("/login", name="video_login")
+     * @Route("/admin/login_check", name="video_check")
+     * @Method({"GET","POST"})
+     * @Template("SwmVideotekBundle:Main:login.html.twig")
+     */
+    public function loginAction()
+    {
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } else {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+        return array(
+                    'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+                    'error'         => $error,
+        );
     }
 }
