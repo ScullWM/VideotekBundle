@@ -55,4 +55,8 @@ services:
     swm_videotek.cmd.populate:
         class: Swm\VideotekBundle\Service\PopulateService
         arguments:
-            ['@doctrine.orm.entity_manager']
+            - '@doctrine.orm.entity_manager'
+            - '@swm_videotek.videoscrapper'
+            - '@swm_videotek.tag.matcher'
+            - '@swm_videotek.video.api.converter'
+

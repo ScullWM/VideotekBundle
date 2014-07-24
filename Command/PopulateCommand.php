@@ -13,8 +13,7 @@ use Swm\VideotekBundle\Model\VideoFromApiRepository;
 
 class PopulateCommand extends ContainerAwareCommand
 {
-    private $minPertinence = 25;
-    private $totalVideoAdded = 0;
+
 
     protected function configure()
     {
@@ -34,38 +33,15 @@ class PopulateCommand extends ContainerAwareCommand
         $output->writeln('Random tag: '.$tag.'');
         $output->writeln('-----------------');
 
-        $videoScrapper = $this->getContainer()->get('swm_videotek.videoscrapper');
-        $videoScrapper->setScrapperService('y');
-        $videos = $videoScrapper->search('aircraft '.$tag->getTag(), 100, 'date');
+        $populateService->addOutput($output);
 
-        $tagMatcherService = $this->getContainer()->get('swm_videotek.tag.matcher');
-        $VideoApiService = $this->getContainer()->get('swm_videotek.video.api.converter');
+        $videos = $populateService->search($tag, 'aircraft ', 'y');
+        $populateService->machinate($videos);
 
-        $em    = $this->getContainer()->get('doctrine')->getManager();
-        foreach ($videos as $video) {
-            $basicPertinence = $tagMatcherService->setVideo($video)->getPertinence();
-            if(0 != $basicPertinence && $populateService->isNew($video)) {
-                $videoDetail = $videoScrapper->seeResult($video->getVideoid());
-                $pertinence  = $tagMatcherService->setVideo($videoDetail)->getPertinence();
+        $addedVideos = $populateService->getVideosAdded();
 
-                if($this->minPertinence <= $pertinence)
-                {
-                    $video = $VideoApiService->convertToEntity($videoDetail);
-
-                    $em->persist($video);
-                    $em->flush();
-
-                    $this->totalVideoAdded++;
-                    $output->writeln('New video! <fg=green>'.$video->getTitle().'</fg=green>');
-                    $output->writeln('Pertinence: '.$basicPertinence.'=><fg=green>'.$pertinence.'</fg=green>');
-                }
-            }else {
-                $output->writeln('Video: '.$basicPertinence);
-            }
-
-        }
         $output->writeln('-----------------');
-        $output->writeln($this->totalVideoAdded.' new video');
+        $output->writeln($addedVideos.' new video');
         //var_dump($videos);
     }
 }
