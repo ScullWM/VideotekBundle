@@ -52,4 +52,18 @@ class VideoRepository extends EntityRepository
 
         return (int) count($videos);
     }
+
+    public function getRandomVideo($limit = 1)
+    {
+        $nbre = $this->createQueryBuilder('v')
+            ->select('COUNT(v)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $randId = rand(1, $nbre);
+        $result = $this->createQueryBuilder('v')->setMaxResults($limit)->where('v.id >= :randid')
+        ->setParameter('randid', $randId)->getQuery()->getSingleResult();
+
+        return $result;
+    }
 }
