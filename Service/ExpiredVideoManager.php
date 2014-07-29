@@ -50,8 +50,8 @@ class ExpiredVideoManager
 
         if($expired===false) return;
 
-        $this->em->remove($video);
-        $this->em->flush();
+        $this->doctrine->remove($video);
+        $this->doctrine->flush();
 
         return (string) '<fg=red>Video '.$id_video.' removed</fg=red>';
     }
