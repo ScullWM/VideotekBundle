@@ -52,6 +52,9 @@ services:
         arguments:
             ['@doctrine.orm.entity_manager']
 
+    swm_videotek.rss.converter:
+        class: Swm\VideotekBundle\Service\Rss\Converter
+
     swm_videotek.cmd.populate:
         class: Swm\VideotekBundle\Service\PopulateService
         arguments:

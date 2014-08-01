@@ -19,12 +19,16 @@ class RssController extends Controller
      *
      * @Route("/rss.xml", name="video_rss")
      * @Method("GET")
-     * @Template("SwmVideotekBundle:Rss:rss.xml.twig")
      */
     public function rssAction()
     {
         $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->getByFav(100);
+        $videos = $em->getRepository("SwmVideotekBundle:Video")->getByFav(10);
+
+        $rssConvert = $this->get('swm_videotek.rss.converter');
+
+        $videos = $rssConvert->convert($videos);
+
 
         $encoder = array(new XmlEncoder());
         $normalizers = array(new GetSetMethodNormalizer());
@@ -33,8 +37,7 @@ class RssController extends Controller
 
         $q = $serializer->serialize($videos, 'xml');
 
-        var_dump($q);
-        exit();
+        return $q;
         //return array('videos' => $videos);
     }
 }
