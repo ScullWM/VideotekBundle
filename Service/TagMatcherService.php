@@ -23,7 +23,7 @@ class TagMatcherService
 
         $this->tags = $this->tagAliasGenerator->process($tags);
     }
-    
+
     public function process()
     {
         if(!($this->video instanceof Video)) throw new VideoException("No valid Video Entity to match tags");
@@ -55,7 +55,7 @@ class TagMatcherService
     /**
      * Sets the value of video.
      *
-     * @param mixed $video the video 
+     * @param mixed $video the video
      *
      * @return self
      */

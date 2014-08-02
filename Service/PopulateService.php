@@ -10,6 +10,8 @@ class PopulateService
     private $totalVideoAdded = 0;
     private $minPertinence = 25;
 
+    private $banWord = array('scale','models',' RC ','emodels.co.uk','1/72','1/32','multiplayer','IL-2 Sturmovik:','Unboxing',' FSX','War Thunder','(FSX)','1/48','scale','Ace Com');
+
     public function __construct($em, $videoScrapper, $tagMatcher, $apiConverter)
     {
         $this->em = $em;
@@ -35,6 +37,8 @@ class PopulateService
 
     private function checkVideo($video)
     {
+        if($this->checkBanWords($video) === false) return;
+
         $basicPertinence = $this->tagMatcher->setVideo($video)->getPertinence();
 
         if(0 != $basicPertinence && $this->isNew($video)) {
@@ -55,6 +59,16 @@ class PopulateService
         }else {
             $this->output->writeln('Video: '.$basicPertinence);
         }
+    }
+
+    private function checkBanWords($video)
+    {
+        foreach ($this->banWord as $word) {
+            if(strstr($video->getDescription(), $word) || strstr($video->getTitle(), $word)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function getVideosAdded()
