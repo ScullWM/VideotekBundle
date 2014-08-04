@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-
+use Symfony\Component\HttpFoundation\Response;
 
 class RssController extends Controller
 {
@@ -23,21 +23,23 @@ class RssController extends Controller
     public function rssAction()
     {
         $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->getByFav(10);
+        $videos = $em->getRepository("SwmVideotekBundle:Video")->getByFav(100);
 
         $rssConvert = $this->get('swm_videotek.rss.converter');
 
+        $rssConvert->setRouter($this->get('router'));
         $videos = $rssConvert->convert($videos);
 
 
-        $encoder = array(new XmlEncoder());
+        $encoder     = array(new XmlEncoder());
         $normalizers = array(new GetSetMethodNormalizer());
 
-        $serializer = new Serializer($normalizers, $encoder);
+        $serializer  = new Serializer($normalizers, $encoder);
 
-        $q = $serializer->serialize($videos, 'xml');
+        $response = new Response();
+        $response->setContent($serializer->serialize($videos, 'xml'));
+        $response->headers->set('Content-Type', 'application/xml');
 
-        return $q;
-        //return array('videos' => $videos);
+        return $response;
     }
 }

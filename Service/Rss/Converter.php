@@ -6,6 +6,8 @@ use Swm\VideotekBundle\Entity\Video;
 
 class Converter
 {
+    private $router;
+
     public function convert(array $videos)
     {
         return array_map(array($this, 'convertVideo'), $videos);
@@ -13,9 +15,10 @@ class Converter
 
     private function convertVideo(Video $video)
     {
-        $videoRss = array();
+        $videoRss          = array();
         $videoRss['title'] = $video->getTitle();
-        $videoRss['tags'] = $this->convertTags($video->getTags());
+        $videoRss['tags']  = $this->convertTags($video->getTags());
+        $videoRss['url']   = $this->router->generate('video_info', array('id'=>$video->getId()), true);
 
         return $videoRss;
     }
@@ -24,10 +27,19 @@ class Converter
     {
         $str = null;
 
+        if($tags->count() > 3) {
+            $tags = $tags->slice(0, 3);
+        }
+
         foreach ($tags as $tag) {
             $str .= ' #'.$tag->getTag();
         }
 
         return (string) $str;
+    }
+
+    public function setRouter($router)
+    {
+        $this->router = $router;
     }
 }
