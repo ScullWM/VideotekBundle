@@ -46,7 +46,7 @@ class TagMatcherService
     {
         if(strstr($this->video->getDescription(), $tag->getTag()) || strstr($this->video->getTitle(), $tag->getTag()))
         {
-            //$this->video->addTag($tag->getOriginalTag());
+            $this->video->addTag($tag->getOriginalTag());
             $this->matchedTag++;
         }
         return;

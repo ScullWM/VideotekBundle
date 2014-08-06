@@ -4,7 +4,6 @@ namespace Swm\VideotekBundle\Service;
 
 class TagTransform
 {
-
     private $tags = array();
 
     public function process($txt)
@@ -14,15 +13,10 @@ class TagTransform
 
         array_map(array($this, 'extractSubTag'), $txtline);
 
-
         $this->tags = array_filter($this->tags);
         $this->tags = array_unique($this->tags);
 
         $this->deleteBadTag();
-
-        /*echo'<br /><br /><br /><br /><br /><br /><br /><br /><pre>';
-        print_r($this->tags);
-        echo'</pre>';*/
 
         return $this->tags;
     }
@@ -30,8 +24,8 @@ class TagTransform
     private function deleteBadTag()
     {
         foreach ($this->tags as $keytag=>$tag) {
-            if(strlen($tag)<=2) unset($this->tags[$keytag]); 
-            if(is_numeric($tag)) unset($this->tags[$keytag]);            
+            if(strlen($tag)<=2) unset($this->tags[$keytag]);
+            if(is_numeric($tag)) unset($this->tags[$keytag]);
         }
     }
 
