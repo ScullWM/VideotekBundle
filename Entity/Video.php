@@ -35,21 +35,21 @@ class Video
      * @ORM\Column(name="url", type="string", length=255)
      */
     private $url;
-    
+
     /**
      * @var string $title
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
-    
+
     /**
      * @var string $slug
      *
      * @Gedmo\Slug(fields={"title", "id"})
      * @ORM\Column(name="slug", type="string", length=255)
      */
-    private $slug;    
+    private $slug;
 
     /**
      * @var boolean $fav
@@ -83,7 +83,7 @@ class Video
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -105,7 +105,7 @@ class Video
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -127,7 +127,7 @@ class Video
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -149,7 +149,7 @@ class Video
     /**
      * Get hits
      *
-     * @return integer 
+     * @return integer
      */
     public function getHits()
     {
@@ -159,7 +159,7 @@ class Video
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set title
      *
@@ -175,7 +175,7 @@ class Video
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -197,7 +197,7 @@ class Video
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -219,7 +219,7 @@ class Video
     /**
      * Get fav
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFav()
     {
@@ -241,7 +241,7 @@ class Video
     /**
      * Get statut
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatut()
     {
@@ -262,7 +262,7 @@ class Video
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection 
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getTags()
     {
@@ -272,7 +272,7 @@ class Video
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection 
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getTag()
     {

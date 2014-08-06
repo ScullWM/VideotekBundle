@@ -7,6 +7,7 @@ use Swm\VideotekBundle\Service\VideoService\VimeoVideoService;
 use Swm\VideotekBundle\Service\VideoService\YoutubeVideoService;
 use Swm\VideotekBundle\Service\VideoService\DailymotionVideoService;
 use Swm\VideotekBundle\Exception\VideoException;
+use Swm\VideotekBundle\Model\VideoExtended;
 
 class VideoService
 {
@@ -38,13 +39,8 @@ class VideoService
         $videoId   = $this->specificVideoService->getVideoId($video->getUrl());
         $extended  = $this->specificVideoService->getThumbnails($videoId);
 
-        $videoExtended = new \StdClass();
-        $videoExtended->id         = $videoId;
-        $videoExtended->videoModel = $video;
-        $videoExtended->videoInfo  = $extended['video'];
-        $videoExtended->img_small  = $extended['img_small'];
-        $videoExtended->img_big    = $extended['img_big'];
+        $videoExtended = new VideoExtended($video, $videoId, $extended);
 
-        return (object) $videoExtended;
+        return $videoExtended;
     }
 }

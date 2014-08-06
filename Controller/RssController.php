@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\HttpFoundation\Response;
+use Swm\VideotekBundle\Service\Rss\RssFormatter;
 
 class RssController extends Controller
 {
@@ -20,26 +21,17 @@ class RssController extends Controller
      * @Route("/rss.xml", name="video_rss")
      * @Method("GET")
      */
-    public function rssAction()
+    public function testAction()
     {
         $em = $this->get('doctrine')->getManager();
         $videos = $em->getRepository("SwmVideotekBundle:Video")->getByFav(100);
 
-        $rssConvert = $this->get('swm_videotek.rss.converter');
+        $videoservice  = $this->get('swm_videotek.videoservice');
+        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
 
-        $rssConvert->setRouter($this->get('router'));
-        $videos = $rssConvert->convert($videos);
+        $feed = $this->get('eko_feed.feed.manager')->get('videos');
+        $feed->addFromArray($videoExtended);
 
-
-        $encoder     = array(new XmlEncoder());
-        $normalizers = array(new GetSetMethodNormalizer());
-
-        $serializer  = new Serializer($normalizers, $encoder);
-
-        $response = new Response();
-        $response->setContent($serializer->serialize($videos, 'xml'));
-        $response->headers->set('Content-Type', 'application/xml');
-
-        return $response;
+        return new Response($feed->render('rss')); // or 'atom'
     }
 }
