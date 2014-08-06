@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 
 class GuzzleAdapter implements HttpAdapterInterface
 {
+    private $client;
+
     public function get($url, $path)
     {
         $original = Stream\create(fopen($url, 'r'));
@@ -28,10 +30,12 @@ class GuzzleAdapter implements HttpAdapterInterface
 
     public function getCode($url)
     {
-        $client = new Client();
+        if(empty($this->client)) {
+            $this->client = new Client();
+        }
 
         try {
-            $res = $client->get($url);
+            $res = $this->client->get($url);
             $code = $res->getStatusCode();
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $code = 404;
