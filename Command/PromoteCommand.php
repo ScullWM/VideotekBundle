@@ -31,6 +31,6 @@ class PromoteCommand extends ContainerAwareCommand
         $em->persist($video);
         $em->flush();
 
-        $output->writeln('Done');
+        $output->writeln('<info>√</info> Done');
     }
 }

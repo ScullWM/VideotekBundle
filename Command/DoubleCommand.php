@@ -27,7 +27,10 @@ class DoubleCommand extends ContainerAwareCommand
 
         $videos = $videoRepo->findAll();
 
+        $progress->start($output, count($videos));
+
         foreach ($videos as $video) {
+            $progress->advance();
             $nbre = $videoRepo->getDoublon($video->getUrl());
 
             if(1 === $nbre) continue;
@@ -43,5 +46,6 @@ class DoubleCommand extends ContainerAwareCommand
                 }
             }
         }
+        $progress->finish();
     }
 }
