@@ -32,6 +32,8 @@ class TagMatcherService
 
         $this->entityManager->persist($this->video);
         $this->entityManager->flush();
+
+        echo 'flush'.$this->video->getId();
     }
 
     public function getPertinence()
@@ -49,7 +51,6 @@ class TagMatcherService
             if($this->video instanceof Video) $this->video->addTag($tag->getOriginalTag());
             $this->matchedTag++;
         }
-        return;
     }
 
     /**

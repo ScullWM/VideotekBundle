@@ -30,8 +30,8 @@ class TagMatcherCommand extends ContainerAwareCommand
         $progress->start($output, count($videos));
 
         foreach ($videos as $video) {
-            $tagMatcherService->setVideo($video)->process();
             $progress->advance();
+            $tagMatcherService->setVideo($video)->process();
         }
 
         $progress->finish();

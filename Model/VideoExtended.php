@@ -29,8 +29,7 @@ class VideoExtended implements RoutedItemInterface
     public function getFeedItemDescription()
     {
         $description = $this->convertTags($this->videoModel->getTags());
-
-        return $description;
+        return '';
     }
 
     public function getFeedItemPubDate()
