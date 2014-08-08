@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class MainController extends Controller
 {
+    const LIMIT_SEARCH_RESULT = 20;
+
     /**
      * test action with it
      *
@@ -155,8 +157,8 @@ class MainController extends Controller
         $term = $request->get('q');
 
         $repositoryManager = $this->get('fos_elastica.manager.orm');
-        $repository = $repositoryManager->getRepository('SwmVideotekBundle:Video');
-        $videos = $repository->find($term);
+        $repository        = $repositoryManager->getRepository('SwmVideotekBundle:Video');
+        $videos            = $repository->find($term, SELF::LIMIT_SEARCH_RESULT);
 
         $videoservice  = $this->get('swm_videotek.videoservice');
         $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
