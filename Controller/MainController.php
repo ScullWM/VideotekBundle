@@ -114,6 +114,7 @@ class MainController extends Controller
 
         $em         = $this->get('doctrine')->getManager();
         $moreVideos = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
+        $moreVideos = array_map(array($videoservice, 'getInfoFromVideo'), $moreVideos);
         $em->persist($video);
         $em->flush();
 

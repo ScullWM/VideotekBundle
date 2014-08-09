@@ -33,7 +33,11 @@ class VideoRepository extends EntityRepository
 
     public function getMore($startId = 0, $limit = 4)
     {
-        return $this->createQueryBuilder('v')->setMaxResults($limit)->where('v.statut = 1')->setFirstResult($startId)->getQuery()->getResult();
+        $startId++;
+        return $this->createQueryBuilder('v')->setMaxResults($limit)->where('v.statut = 1')
+            ->where('v.id >= :startid')
+            ->setParameter('startid', $startId)
+            ->getQuery()->getResult();
     }
 
     public function getImport()
