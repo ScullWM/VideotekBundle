@@ -1,7 +1,12 @@
 <div class="row">
     {% for video in videos %}
         <div class="col-md-1">
-            <a href="{{ path('video_admin_edit', {'id':video.videoModel.id}) }}" class="titlevideo"><img src="{{video.img_small}}" alt="" title="{{video.videoModel.title | truncate(30, true, '...')}}" style="height:75px"></a>
+        {% if 'edit' == do %}
+            {% set route = 'video_admin_edit' %}
+        {% else %}
+            {% set route = 'video_admin_delete' %}
+        {% endif %}
+            <a href="{{ path(route, {'id':video.videoModel.id}) }}" class="titlevideo"><img src="{{video.img_small}}" alt="" title="{{video.videoModel.title | truncate(30, true, '...')}}" style="height:75px"></a>
         </div>
     {% endfor %}
 </div>

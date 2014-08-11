@@ -20,7 +20,7 @@ class VideoService
      * @param  Video  $video [description]
      * @return object        [description]
      */
-    public function getInfoFromVideo(Video $video)
+    public function getInfoFromVideo(Video &$video)
     {
         switch (true) {
             case strstr($video->getUrl(),'youtu'):

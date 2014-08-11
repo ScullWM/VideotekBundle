@@ -25,25 +25,32 @@ class AdminController extends Controller
 {
     /**
      * test action with it
-     * 
-     * @Route("/", name="video_admin_home")
+     *
+     * @Route("/", name="video_admin_home", defaults={"do" = "edit"})
      * @Method("GET")
      * @Template("SwmVideotekBundle:Admin:index.html.twig")
      */
     public function indexAction()
     {
         $em = $this->get('doctrine')->getManager();
-        $videos = $em->getRepository("SwmVideotekBundle:Video")->findAll();
+        $query = $em->getRepository("SwmVideotekBundle:Video")->getLast();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1),
+            96
+        );
 
         $videoservice  = $this->get('swm_videotek.videoservice');
-        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
+        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $pagination->getItems());
 
-        return array('videos' => $videoExtended);
+        return array('videos' => $videoExtended, 'pagination'=>$pagination, 'do'=>$this->get('request')->query->get('do', 'edit'));
     }
 
     /**
      * test action with it
-     * 
+     *
      * @Route("/waiting", name="video_admin_waiting")
      * @Method("GET")
      * @Template("SwmVideotekBundle:Admin:index.html.twig")
@@ -160,5 +167,20 @@ class AdminController extends Controller
         $scrapper->setScrapperService($service);
 
         return $scrapper;
+    }
+
+    /**
+     *
+     * @Route("/delete/{id}", name="video_admin_delete")
+     * @Method({"GET","POST"})
+     */
+    public function deleteAction(Video $video)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($video);
+        $em->flush();
+
+         return $this->redirect($this->generateUrl('video_admin_home'));
     }
 }
