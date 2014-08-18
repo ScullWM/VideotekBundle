@@ -17,50 +17,57 @@ class RssCommand extends ContainerAwareCommand
         $this
             ->setName('swm:videotek:rss')
             ->setDescription('Generate rss feed with random videos')
+            ->addOption('name',      null, InputOption::VALUE_REQUIRED, 'Feed name defined in eko_feed configuration')
+            ->addOption('entity',    null, InputOption::VALUE_OPTIONAL, 'Entity to use to generate the feed')
             ->addOption('filename',  null, InputOption::VALUE_REQUIRED, 'Defines feed filename')
-        ;
+            ->addOption('orderBy',   null, InputOption::VALUE_OPTIONAL, 'Order field to sort by using findBy() method')
+            ->addOption('direction', null, InputOption::VALUE_OPTIONAL, 'Direction to give to sort field with findBy() method')
+            ->addOption('format',    null, InputOption::VALUE_OPTIONAL, 'Formatter to use to generate, "rss" is default')
+            ->addOption('limit',     null, InputOption::VALUE_OPTIONAL, 'Defines a limit of entity items to retrieve')
+            ->addArgument('host', InputArgument::REQUIRED, 'Set the host');
+                ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filename = $input->getOption('filename');
+        $name      = $input->getOption('name');
+        $entity    = $input->getOption('entity');
+        $filename  = $input->getOption('filename');
+        $format    = $input->getOption('format') ?: 'rss';
+        $limit     = $input->getOption('limit');
+        $direction = $input->getOption('direction');
+        $orderBy   = $input->getOption('orderBy');
+        $rootDir   = $this->getContainer()->get('kernel')->getRootDir();
 
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $video = $em->getRepository("SwmVideotekBundle:Video")->getRandomVideo();
+        $videos = $em->getRepository("SwmVideotekBundle:Video")->getRandomVideo();
 
         $videoservice  = $this->getContainer()->get('swm_videotek.videoservice');
-        $videoExtended = $videoservice->getInfoFromVideo($video);
+        $videoExtended = array($videoservice->getInfoFromVideo($videos));
 
-        $feed = $this->getContainer()->get('eko_feed.feed.manager')->get('videos');
-        $feed->addFromArray(array($videoExtended));
 
-        $dump = $feed->render('rss');
-        $filepath = $this->getWebPath() . $filename;
+        /**
+         * Avoid crontab cmd to generate localhost url
+         */
+        $this->getContainer()->get('router')->getContext()->setHost($input->getArgument('host'));
 
-        $this->getFilesystem()->dumpFile($filepath, $dump);
+        $feedDumpService = $this->getContainer()->get('eko_feed.feed.dump');
+        $feedDumpService
+                ->setName($name)
+                ->setEntity($entity)
+                ->setItems($videoExtended)
+                ->setFilename($filename)
+                ->setFormat($format)
+                ->setLimit($limit)
+                ->setRootDir($rootDir)
+                ->setDirection($direction)
+                ->setOrderBy($orderBy)
+            ;
 
+        $feedDumpService->dump();
 
         $output->writeln('<comment>done!</comment>');
-        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $filepath));
-    }
+        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $rootDir . $filename));
 
-    /**
-     * Get Symfony web path
-     *
-     * @return mixed
-     */
-    protected function getWebPath()
-    {
-        return $this->getContainer()->get('kernel')->getRootDir().'/../web/';
-    }
-
-    /**
-     * Get Symfony Filesystem component
-     *
-     * @return \Symfony\Component\Filesystem\Filesystem
-     */
-    protected function getFilesystem()
-    {
-        return $this->getContainer()->get('filesystem');
     }
 }
