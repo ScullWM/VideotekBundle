@@ -44,7 +44,7 @@ class VideoExtended implements RoutedItemInterface
 
     public function getFeedItemRouteParameters()
     {
-        return array('id'=>$this->videoModel->getId());
+        return array('id'=>$this->videoModel->getId(), 'slug'=>$this->videoModel->getSlug());
     }
 
     public function getFeedItemUrlAnchor()
