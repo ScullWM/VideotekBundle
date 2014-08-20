@@ -1,8 +1,8 @@
 <div class="row">
     {% for video in videos %}
         <div class="col-md-3">
-            <a href="{{ path('video_info', {'id':video.videoModel.id}) }}" class="titlevideo">{{video.videoModel.title | truncate(25, true, '...')}}</a>
-            <a href="{{ path('video_info', {'id':video.videoModel.id}) }}" class="titlevideo"><img src="{{video.img_small}}" class="img-thumbnail" alt="{{video.videoModel.description | truncate(30, true, '...')}}" title="{{video.videoModel.description | truncate(30, true, '...')}}" /></a>
+            <a href="{{ path('video_info', {'id':video.videoModel.id, 'slug':video.videoModel.slug}}) }}" class="titlevideo">{{video.videoModel.title | truncate(25, true, '...')}}</a>
+            <a href="{{ path('video_info', {'id':video.videoModel.id, 'slug':video.videoModel.slug}}) }}" class="titlevideo"><img src="{{video.img_small}}" class="img-thumbnail" alt="{{video.videoModel.description | truncate(30, true, '...')}}" title="{{video.videoModel.description | truncate(30, true, '...')}}" /></a>
         </div>
     {% endfor %}
 </div>

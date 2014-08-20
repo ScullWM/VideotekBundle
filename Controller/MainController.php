@@ -102,7 +102,8 @@ class MainController extends Controller
     /**
      * See a special video
      *
-     * @Route("/video/{id}", name="video_info")
+     * @Route("/video/{slug}/{id}", name="video_info")
+     * @Route("/video/{id}", name="video_info_old_route")
      * @Method("GET")
      * @Template("SwmVideotekBundle:Main:video.html.twig")
      */
@@ -119,6 +120,27 @@ class MainController extends Controller
         $em->flush();
 
         return array('video'=>$videoExtended, 'moreVideos'=>$moreVideos);
+    }
+
+    /**
+     * Search action
+     *
+     * @Route("/discover", name="video_discover
+     * @Method("GET")
+     * @Template("SwmVideotekBundle:Main:discover.html.twig")
+     */
+    public function discoverAction()
+    {
+        $em         = $this->get('doctrine')->getManager();
+        $maxVideo   = $em->getRepository('SwmVideotekBundle:Video')->getRandomVideo();
+        $videos     = $em->getRepository('SwmVideotekBundle:Video')->getMore($maxVideo);
+        $tags       = $em->getRepository("SwmVideotekBundle:Tag")->findAll();
+
+        $videoservice  = $this->get('swm_videotek.videoservice');
+        $videoExtended = array_map(array($videoservice, 'getInfoFromVideo'), $videos);
+        $maxVideo = $videoservice->getInfoFromVideo($maxVideo);
+
+        return array('videos'=>$videoExtended, 'maxvideo'=>$maxVideo, 'tags'=>$tags);
     }
 
     /**

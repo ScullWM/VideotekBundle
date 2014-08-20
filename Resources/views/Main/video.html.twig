@@ -5,7 +5,7 @@
 {% block specialsMetas %}
 <meta property="og:title" content="{{video.videoModel.title}}" />
 <meta property="og:image" content="{{video.img_big}}" />
-<meta property="og:url" content="{{ path('video_info', {'id':video.videoModel.id}) }}" />
+<meta property="og:url" content="{{ path('video_info', {'id':video.videoModel.id, 'slug':video.videoModel.slug }) }}" />
 <meta name="twitter:image" value="{{video.img_big}}" />
 <meta name="twitter:card" value="photo" />
 <meta name="twitter:image:src" content="{{video.img_big}}">

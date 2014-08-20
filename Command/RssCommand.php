@@ -45,10 +45,6 @@ class RssCommand extends ContainerAwareCommand
         $videoservice  = $this->getContainer()->get('swm_videotek.videoservice');
         $videoExtended = array($videoservice->getInfoFromVideo($videos));
 
-
-        /**
-         * Avoid crontab cmd to generate localhost url
-         */
         $this->getContainer()->get('router')->getContext()->setHost($input->getArgument('host'));
 
         $feedDumpService = $this->getContainer()->get('eko_feed.feed.dump');

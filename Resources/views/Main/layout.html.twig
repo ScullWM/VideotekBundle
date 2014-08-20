@@ -15,7 +15,7 @@
         {% endstylesheets %}
         {% block specialsMetas %}{% endblock %}
 
-        <!-- Just for debugging purposes. Don't actually copy this line! --><!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]--><!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries --><!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]--><!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries --><!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
     </head>
     <body role="document">
         <!-- Fixed navbar -->
@@ -27,6 +27,7 @@
                     <li class="{% if app.request.attributes.get('_route') == 'video_home' %}active{% endif %}"><a href="{{ path('video_home') }}">Home</a></li>
                     <li class="{% if app.request.attributes.get('_route') == 'video_top' %}active{% endif %}"><a href="{{ path('video_top') }}">Top</a></li>
                     <li class="{% if app.request.attributes.get('_route') == 'video_fav' %}active{% endif %}"><a href="{{ path('video_fav') }}">Favorites</a></li>
+                    <li class="{% if app.request.attributes.get('_route') == 'video_discover' %}active{% endif %}"><a href="{{ path('video_discover') }}">Discover</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ path('video_submit') }}">Submit a video</a></li>
@@ -40,7 +41,7 @@
         <div class="container theme-showcase" style="margin-top:60px" role="main"><!-- Main jumbotron for a primary marketing message or call to action -->
         {% block body %}{% endblock %}
         <footer>
-            <p>© VideosAero {{ "now"|date("Y") }}</p>
+            <p>© VideosAero {{ "now"|date("Y") }} | <a href="{{ path('video_admin_home') }}">Admin</a></p>
         </footer>
         </div>
         <!-- /container -->
