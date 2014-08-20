@@ -125,7 +125,7 @@ class MainController extends Controller
     /**
      * Search action
      *
-     * @Route("/discover", name="video_discover
+     * @Route("/discover", name="video_discover")
      * @Method("GET")
      * @Template("SwmVideotekBundle:Main:discover.html.twig")
      */
