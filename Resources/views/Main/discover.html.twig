@@ -19,17 +19,6 @@
         {% include 'SwmVideotekBundle:Main:listing.inc.html.twig' %}
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                {{video.videoModel.description}}
-            </div>
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <span class="badge">{{video.videoModel.hits}}</span>
-                Hits
-            </li>
-        </ul>
         {% for t in tags %}
             <span class="label label-info"><a href="{{path('videos_bytag', {'id':t.id,'slug':t.tag})}}">{{ t.tag }}</a></span>
         {% endfor %}

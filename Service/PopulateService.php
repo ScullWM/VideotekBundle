@@ -9,8 +9,13 @@ class PopulateService
     private $videoScrapper;
     private $totalVideoAdded = 0;
     private $minPertinence = 25;
+    private $typeSearch = array('date','rating','relevance','videoCount','viewCount');
+    private $durationSearch = array('any','long','medium','short');
 
-    private $banWord = array('scale','models',' RC ','emodels.co.uk','1/72','1/32','multiplayer','IL-2 Sturmovik:','Unboxing',' FSX','War Thunder','(FSX)','1/48','scale','Ace Com');
+    private $banWord = array('scale','models',' RC ','emodels.co.uk','1/72','1/32','multiplayer','Minecraft',
+        'IL-2 Sturmovik:','Unboxing',' FSX','War Thunder','(FSX)','1/48','scale','Ace Com','Battlefield 4','1:32',
+        'WarThunder',' Sim ','Carrier Series','Kantai ','Wargame','GTA ','Grand Theft Auto','Freedom Fighter',
+        'Flight Simulator X','Ratchet','Model Airplane','Paper','FSX ','RC model','Scale','Battlestations','Lucasfilm');
 
     public function __construct($em, $videoScrapper, $tagMatcher, $apiConverter)
     {
@@ -24,8 +29,9 @@ class PopulateService
 
     public function search($tag, $prefix, $service)
     {
+        $randKeys = array_rand($this->typeSearch, 1);
         $this->videoScrapper->setScrapperService($service);
-        $videos = $this->videoScrapper->search($prefix.$tag, 100, 'date');
+        $videos = $this->videoScrapper->search($prefix.$tag, 100, $this->typeSearch[$randKeys]);
 
         return $videos;
     }
