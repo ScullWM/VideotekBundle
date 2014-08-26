@@ -8,11 +8,11 @@ class PopulateService
     private $repository;
     private $videoScrapper;
     private $totalVideoAdded = 0;
-    private $minPertinence = 25;
+    private $minPertinence = 20;
     private $typeSearch = array('date','rating','relevance','videoCount','viewCount');
     private $durationSearch = array('any','long','medium','short');
 
-    private $banWord = array('scale','models',' RC ','emodels.co.uk','1/72','1/32','multiplayer','Minecraft',
+    private $banWord = array('scale','models',' RC ','emodels.co.uk','1/72','1/32','multiplayer','Minecraft','twitch.tv',
         'IL-2 Sturmovik:','Unboxing',' FSX','War Thunder','(FSX)','1/48','scale','Ace Com','Battlefield 4','1:32',
         'WarThunder',' Sim ','Carrier Series','Kantai ','Wargame','GTA ','Grand Theft Auto','Freedom Fighter',
         'Flight Simulator X','Ratchet','Model Airplane','Paper','FSX ','RC model','Scale','Battlestations','Lucasfilm');
