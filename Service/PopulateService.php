@@ -23,8 +23,8 @@ class PopulateService
         $this->repository = $em->getRepository("SwmVideotekBundle:Tag");
 
         $this->videoScrapper = $videoScrapper;
-        $this->tagMatcher = $tagMatcher;
-        $this->apiConverter = $apiConverter;
+        $this->tagMatcher    = $tagMatcher;
+        $this->apiConverter  = $apiConverter;
     }
 
     public function search($tag, $prefix, $service)

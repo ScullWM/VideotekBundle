@@ -13,7 +13,7 @@ use Swm\VideotekBundle\Model\VideoFromApiRepository;
 
 class PopulateCommand extends ContainerAwareCommand
 {
-
+    private $prefixSearch = array('','aircraft ','plane ','jet ','aero ','aviation ');
 
     protected function configure()
     {
@@ -29,13 +29,14 @@ class PopulateCommand extends ContainerAwareCommand
 
         $populateService = $this->getContainer()->get('swm_videotek.cmd.populate');
         $tag = $populateService->getRandomTag();
+        $randKeys = array_rand($this->prefixSearch, 1);
 
-        $output->writeln('Random tag: '.$tag.'');
+
+        $output->writeln('Random tag: '.$tag.' with prefix: '. $this->prefixSearch[$randKeys]);
         $output->writeln('-----------------');
 
         $populateService->addOutput($output);
-
-        $videos = $populateService->search($tag, 'aircraft ', 'y');
+        $videos = $populateService->search($tag, $this->prefixSearch[$randKeys], 'y');
         $populateService->machinate($videos);
 
         $addedVideos = $populateService->getVideosAdded();
