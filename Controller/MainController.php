@@ -114,7 +114,12 @@ class MainController extends Controller
         $videoExtended = $videoservice->getInfoFromVideo($video);
 
         $em         = $this->get('doctrine')->getManager();
-        $moreVideos = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
+        $repositoryManager = $this->get('fos_elastica.manager.orm');
+        $repository        = $repositoryManager->getRepository('SwmVideotekBundle:Video');
+        $moreVideos        = $repository->find($video->getTitle(), 4);
+
+        $videoservice  = $this->get('swm_videotek.videoservice');
+
         $moreVideos = array_map(array($videoservice, 'getInfoFromVideo'), $moreVideos);
         $em->persist($video);
         $em->flush();
