@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
+use Elastica\Exception\ResponseException;
 
 class MainController extends Controller
 {
@@ -115,8 +116,14 @@ class MainController extends Controller
 
         $em         = $this->get('doctrine')->getManager();
         $repositoryManager = $this->get('fos_elastica.manager.orm');
-        $repository        = $repositoryManager->getRepository('SwmVideotekBundle:Video');
-        $moreVideos        = $repository->find($video->getTitle(), 4);
+
+        try {
+            $repository        = $repositoryManager->getRepository('SwmVideotekBundle:Video');
+            $moreVideos        = $repository->find($video->getTitle(), 4);
+
+        } catch (ResponseException $e) {
+            $moreVideos        = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
+        }
 
         $videoservice  = $this->get('swm_videotek.videoservice');
 
