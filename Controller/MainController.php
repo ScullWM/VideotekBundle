@@ -121,7 +121,7 @@ class MainController extends Controller
             $repository        = $repositoryManager->getRepository('SwmVideotekBundle:Video');
             $moreVideos        = $repository->find($video->getTitle(), 4);
 
-        } catch (ResponseException $e) {
+        } catch (\Exception $e) {
             $moreVideos        = $em->getRepository('SwmVideotekBundle:Video')->getMore($video->getid());
         }
 
